@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="98.273125mm"
+   height="98.27256mm"
+   viewBox="0 0 98.273125 98.27256"
+   version="1.1"
+   id="svg1"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1">
+    <linearGradient
+       id="swatch18">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop18" />
+    </linearGradient>
+    <linearGradient
+       id="swatch17">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop17" />
+    </linearGradient>
+    <linearGradient
+       id="swatch16">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop16" />
+    </linearGradient>
+    <linearGradient
+       id="swatch14">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop14" />
+    </linearGradient>
+    <linearGradient
+       id="swatch13">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop13" />
+    </linearGradient>
+    <linearGradient
+       id="swatch12">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop12" />
+    </linearGradient>
+    <linearGradient
+       id="swatch11">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop11" />
+    </linearGradient>
+    <linearGradient
+       id="swatch10">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop10" />
+    </linearGradient>
+    <linearGradient
+       id="swatch8">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop8" />
+    </linearGradient>
+    <linearGradient
+       id="swatch6">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop6" />
+    </linearGradient>
+    <linearGradient
+       id="swatch5">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop5" />
+    </linearGradient>
+    <linearGradient
+       id="swatch4">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop4" />
+    </linearGradient>
+    <linearGradient
+       id="swatch2">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop2" />
+    </linearGradient>
+    <linearGradient
+       id="swatch1">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop1" />
+    </linearGradient>
+    <linearGradient
+       xlink:href="#swatch10"
+       id="linearGradient10"
+       x1="53.204906"
+       y1="209.53987"
+       x2="137.02084"
+       y2="209.53987"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       xlink:href="#swatch17"
+       id="linearGradient17"
+       x1="107.45333"
+       y1="181.40804"
+       x2="136.82906"
+       y2="181.40804"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.93184257,0,0,0.94205912,9.3794916,10.583903)" />
+    <linearGradient
+       xlink:href="#swatch18"
+       id="linearGradient18"
+       x1="80.396736"
+       y1="196.22475"
+       x2="135.02528"
+       y2="196.22475"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(-1.6398773,2.00451)" />
+  </defs>
+  <g
+     id="layer1"
+     transform="translate(-50.679521,-155.70066)">
+    <g
+       id="g18">
+      <g
+         id="g19"
+         transform="matrix(1.0289965,0,0,1.0289965,-1.4695284,-7.3643368)">
+        <g
+           id="g21"
+           transform="matrix(1.0746821,0,0,1.0746821,-3.7848515,-18.967244)">
+          <g
+             id="g20">
+            <path
+               id="rect9"
+               style="fill:none;stroke:url(#linearGradient10);stroke-width:5.051;stroke-linecap:square;stroke-linejoin:round;stroke-dasharray:none;paint-order:fill markers stroke"
+               d="M 101.7974,167.63215 H 53.205021 v 83.81555 h 83.816069 v -48.85025" />
+            <path
+               id="rect16"
+               style="fill:none;stroke:url(#linearGradient17);stroke-width:5.0743;stroke-linecap:square;paint-order:fill markers stroke"
+               d="m 111.05152,167.64415 h 25.8308 l 3.2e-4,25.60176" />
+            <path
+               style="fill:none;stroke:url(#linearGradient18);stroke-width:5.051;stroke-linecap:square;stroke-linejoin:miter;stroke-dasharray:none;paint-order:fill markers stroke"
+               d="M 133.38542,171.30151 78.756861,225.15702"
+               id="path17" />
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
