@@ -1,8 +1,8 @@
 <template>
   <div>
-       <div id="ourHeshtalmuyotFlex">
+       <div :class="[ windowWidth <= 450 ? 'ourHeshtalmuyotFlexMobile' : 'ourHeshtalmuyotFlexTablet' ]">
           <v-card
-            class="mx-auto my-8 owd-reveal"
+            :class="[ windowWidth <= 450 ? 'mx-auto my-8 owd-reveal' : 'mx-auto my-8' ]"
             elevation="16"
             max-width="344"
             color="indigo-lighten-5"
@@ -34,6 +34,7 @@
 export default {
     data(){
         return{
+        windowWidth: window.innerWidth,
         heshCards: [
           {
             src: require('@/assets/images/ranagHesh.png'), caption: ' צה"לית רנ"ג', text: '"הנגדים הם עמוד השדרה של הצבא וצריך להשקיע בעבודה בדור הנוכחי והדור הבא"', subtitle: 'השתלמות מטכ"לית לדרג רב-נגד'
@@ -46,21 +47,43 @@ export default {
           },
 
         ]
+        }},
+      mounted(){
+        window.addEventListener('resize', this.updateWidth);
+      },
+      beforeUnmount() {
+        window.removeEventListener('resize', this.updateWidth);
+      },
+      methods: {
+        updateWidth() {
+          this.windowWidth = window.innerWidth;
         }
-    }
+      },
+
+    
 
 }
 </script>
 
 <style>
 
-#ourHeshtalmuyotFlex{
+.ourHeshtalmuyotFlexMobile{
   position: relative;
   top:5vh;
   display: flex;
   flex-direction: column;
   gap: 20px;
   direction: rtl;
+}
+
+.ourHeshtalmuyotFlexTablet{
+position: relative;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  direction: rtl;
+  align-items: center;
+  margin: 22px;
 }
 
 .cardTitle{

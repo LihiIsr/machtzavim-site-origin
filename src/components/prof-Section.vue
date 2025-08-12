@@ -1,55 +1,33 @@
 <template>
-<div class="flexImgContainer flexProfImgContainer">
-  <div v-if="firstProf" class="firstProfFlex">
+<div class="ProfCardsContainer">
+  <div class="firstProfFlex">
     <div
-        v-for="(image, i) in profCards1"
+        v-for="(image, i) in profCardsCurr"
         :key="i"
         class="flip-card-inner"
         color="indigo-lighten-5"
-        v-bind:id="profCards1[i].id"   
+        v-bind:id="profCardsCurr[i].id"   
+      
         >
            
         <div class="flip-card-front owd-reveal">
-            <img class="avatarImg" :src="profCards1[i].src" />
-            <p class="profName"> פרופ' {{profCards1[i].name}} </p>
+            <img class="avatarImg" :src="profCardsCurr[i].src" />
+            <p class="profName"> פרופ' {{profCardsCurr[i].name}} </p>
             <p class="profSubtitle">הסבר קצר על תחום עיסוקו</p>
                 <p class="profText">הסבר ארוך יותר על המרצה. למשל: בעל תואר במדעי החברה ופעיל לטובת ארגון מסויים</p>
-            <button class="readMore" @click="toggleFlip(profCards1[i].id)" v-if="profCards1[i].moreInfo">קרא עוד >></button>
+            <button class="readMore" @click="toggleFlip(profCardsCurr[i].id)" v-if="profCardsCurr[i].moreInfo">קרא עוד >></button>
         </div>
 
         <div class="flip-card-back">
-            <button class="readLess" @click="toggleFlip(profCards1[i].id)" v-if="profCards1[i].moreInfo"> >> חזור</button>
+            <button class="readLess" @click="toggleFlip(profCardsCurr[i].id)" v-if="profCardsCurr[i].moreInfo"> >> חזור</button>
         </div>
     </div>
   </div>
 
-    
-  <div v-if="!firstProf" class="firstProfFlex">
-    <div
-        v-for="(image, i) in profCards2"
-        :key="i"
-        class="flip-card-inner "
-        color="indigo-lighten-5"
-        v-bind:id="profCards2[i].id"   
-        >
-           
-        <div class="flip-card-front owd-reveal">
-            <img class="avatarImg" :src="profCards2[i].src" />
-            <p class="profName"> פרופ' {{profCards2[i].name}} </p>
-            <p class="profSubtitle">הסבר קצר על תחום עיסוקו</p>
-                <p class="profText">הסבר ארוך יותר על המרצה. למשל: בעל תואר במדעי החברה ופעיל לטובת ארגון מסויים</p>
-            <button class="readMore" @click="toggleFlip(profCards2[i].id)" v-if="profCards2[i].moreInfo">קרא עוד >></button>
-        </div>
-
-        <div class="flip-card-back">
-            <button class="readLess" @click="toggleFlip(profCards2[i].id)" v-if="profCards2[i].moreInfo"> >> חזור</button>
-        </div>
-    </div>
-  </div>
 
         <div id="flexPagination">
-                <span class="pagination" @click="changeProfPage" :class="{clickedProf: firstProf}"><p class="paginationText">1</p></span>
-                <span class="pagination" @click="changeProfPage" :class="{clickedProf: !firstProf}"><p class="paginationText">2</p></span>
+            <span class="paginationCircle" @click="changeProfPage(0)" :class="{clickedProf: firstProf}"><p class="paginationText">1</p></span>
+            <span class="paginationCircle" @click="changeProfPage(1)" :class="{clickedProf: !firstProf}"><p class="paginationText">2</p></span>
         </div>
 </div>
 </template>
@@ -62,7 +40,8 @@ export default {
     data() {
         return{
            firstProf:true,
-           profArr:'profCards1',
+           profCardsCurr:[],
+
             profCards1: [
           
             {
@@ -204,13 +183,29 @@ export default {
             }
 
         ],
-        strArray: '',
+
 
         }
     },
+    mounted() {
+      this.profCardsCurr = JSON.parse(JSON.stringify(this.profCards1))
+
+    },
     methods:{
-        changeProfPage(){
-            this.firstProf=!this.firstProf;
+        changeProfPage(page){
+
+           this.firstProf=!this.firstProf;
+           this.profCardsCurr = [];
+
+            switch (page) {
+              case 0:
+                this.profCardsCurr = JSON.parse(JSON.stringify(this.profCards1))
+                break;
+              case 1:
+                this.profCardsCurr = JSON.parse(JSON.stringify(this.profCards2))
+                break;
+             
+            }
             window.scrollTo({top:0, behavior: 'smooth'});
 
         },
@@ -226,14 +221,6 @@ export default {
 </script>
 
 <style>
-.flexImgContainer{
-  position: absolute;
-  top: 27vh;
-  display: flex;
-  justify-items: center;
-  justify-content: center;
-  left: 10vw;
-}
 .profImg{
   width: 40vw;
   height: 20vh;
@@ -243,16 +230,19 @@ export default {
     font-size: 5vw;
 }
 
-.flexProfImgContainer{
+.ProfCardsContainer{
   flex-direction: column;
   top: 11vh;
   direction: rtl;
-  width: 100vw;
+  width: fit-content;
   flex-wrap: wrap;
-    left: 2vw;
-    gap: 10px;
-    left: 50%;
-    transform: translate(-50%,-0%);
+  gap: 10px;
+  left: 50%;
+  transform: translate(-50%,-0%);
+  position: absolute;
+  display: flex;
+  justify-items: center;
+  justify-content: center;
 
 }
 #ourProf{
@@ -267,7 +257,7 @@ export default {
   justify-content: center;
 }
 
-.pagination{
+.paginationCircle{
   width: 11vw;
   height: 5vh;
   border-radius: 25px;
@@ -315,6 +305,8 @@ export default {
     display: flex;
     flex-direction: column;
     width: 100vw;
+        /* /fit cont */
+
     gap: 10px;
     left: -2vw;
     position: relative;
@@ -350,9 +342,6 @@ export default {
   -ms-backface-visibility: hidden;
   backface-visibility: hidden;
   z-index: 2;
-  /* -webkit-box-shadow: 5px 6px 32px 2px rgba(133,133,133,0.71);
-  -moz-box-shadow: 5px 6px 32px 2px rgba(133,133,133,0.71);
-  box-shadow: 5px 6px 32px 2px rgba(133,133,133,0.71); */
 }
 
 .flip-card-inner  .flip-card-back {
@@ -370,5 +359,44 @@ export default {
     left: -2vw;
 
 }
+
+@media only screen and (min-width: 1050px) {
+  .flip-card-inner {
+      width: 68vw;
+      height: 38vh;
+    }
+    .firstProfFlex{
+      width: fit-content;
+  }
+  .avatarImg {
+      width: 9vw;
+  }
+  .profName {
+    font-size: 2vw;
+  }
+  .profSubtitle{
+    font-size: 1.5vw;
+  }
+  .readMore{
+    left: -59vw;
+    width: fit-content;
+    top: -1vh;
+    font-size: 1vw;
+  }
+  .flip-card-inner .flip-card-front .flip-card-back{
+    left: -1vw;
+  }
+  .readLess{
+    top: 25vh;
+    right: 60vw;
+    font-size: 1vw;
+  }
+  .ProfCardsContainer{
+    top: 18vh;
+  }
+}
+
+
+
 
 </style>

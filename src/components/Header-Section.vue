@@ -2,7 +2,7 @@
     <div id="container">
         <div id="infoHeader">
             <div id="banner">
-                <img id="logo" src="@/assets/images/logoLight1.png" @click="clickbtn(4)">
+                <img id="logo" src="@/assets/images/logoLight1.png" @click="handlePage('mainPage')">
                 
                 <div class="switch">
                   <label class="theme-switch" for="checkbox">
@@ -34,7 +34,7 @@
         this.toggleMenu = true;
         this.$emit("open", this.toggleMenu);
       },
-      clickbtn(i){
+      handlePage(i){
         this.$emit("changePage", i);
 
       },
@@ -102,6 +102,7 @@
     top: 1vh;
     height: 8vh;
     width: 26vw;
+    cursor: pointer;
 }
 #menu{
   position: relative;
@@ -182,4 +183,21 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
+
+
+@media only screen and (min-width: 1050px) {
+    #logo{
+      right: 4vw;
+      top: 0vh;
+      height: 11vh;
+      width: 11vw;
+    }
+    #banner{
+      height: 11vh;
+    }
+    
+
+}
+
 </style>

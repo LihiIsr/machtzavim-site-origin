@@ -1,16 +1,16 @@
 <template>
 <div>
-  <div v-if="mobile" class="mainWrapper">
-    <Header id="header" @changePage="takeAction" @isDark="changeMode" @open="openMenu"></Header>
-    <Main id="main" :numclicked=clickedNum :isDark=isDarkMode :isLoaded=firstLoad></Main>
-    <side-bar :isOpen=open :isDark=isDarkMode @close="closeMenu" @change="takeAction"></side-bar>
+  <!-- v-if="mobile" -->
+  <div  class="mainWrapper">
+    <Header id="header" @changePage="handleChangePage" @isDark="changeMode" @open="openMenu"></Header>
+    <Main id="main" :pageClicked=clickedPage :isDark=isDarkMode :isLoaded=firstLoad></Main>
+    <side-bar :isOpen=open :isDark=isDarkMode @close="closeMenu" @change="handleChangePage"></side-bar>
 
     <Footer id="footer" :class="{heshPageFooter: isHesh, profPageFooter:isProf, adminPageFooter:isAdmin}" ></Footer>
   </div>
-  <div id="unAvailScreen" v-else :style="cssVars">
-    <!-- {{height}} -->
+  <!-- <div id="unAvailScreen" v-else>
     <img id="error" src="@/assets/images/error2.png">
-  </div>
+  </div> -->
 </div>
 </template>
 
@@ -19,6 +19,8 @@ import Header from './components/Header-Section.vue'
 import Main from './components/Main-Section.vue'
 import Footer from './components/Footer-Section.vue'
 import sideBar from './components/sideBar.vue'
+
+
 
 let vh = window.innerHeight * 1;
 document.documentElement.style.setProperty('--vh', `${vh}px`);
@@ -39,10 +41,10 @@ export default {
   },
   data() {
       return {
-        clickedNum: 4,
+        clickedPage: "mainPage",
         mobile: null,
-        windowWidth: null,
-        height: window.innerHeight,
+        windowWidth: window.innerWidth,
+        windowHeight:window.innerHeight,
         open: false,
         isHesh: false,
         isProf: false,
@@ -53,11 +55,11 @@ export default {
   },
   created(){
     window.addEventListener('resize', this.checkScreen);
-    this.checkScreen();
   },
   methods: {
       checkScreen(){
         this.windowWidth = window.innerWidth;
+        this.windowHeight = window.innerHeight;
         if(this.windowWidth <= 450){
           this.mobile = true;
           return;
@@ -68,12 +70,11 @@ export default {
       changeMode(mode){
           this.isDarkMode=mode;
       },
-      takeAction(index){
+      handleChangePage(page){
         let vh = window.innerHeight * 1;
         document.documentElement.style.setProperty('--vh', `${vh}px`);
-
-        // console.log('clicked', index);
-        if(index === 0){
+        console.log(page);
+        if(page === "ההשתלמויות שלנו"){
           this.isProf=false;
           document.getElementById("app").classList.remove("profPage");
           this.isAdmin=false;
@@ -83,7 +84,7 @@ export default {
           // console.log("hesh");
           document.getElementById("app").classList.add("heshPage");
         }
-        else if(index === 4){
+        else if(page === "mainPage"){
           document.getElementById("app").classList.remove("heshPage");
           this.isHesh= false;
           this.isProf=false;
@@ -94,7 +95,7 @@ export default {
           console.log(this.firstLoad);
 
         }
-        else if(index === 1){
+        else if(page === "המרצים שלנו"){
           this.isHesh=false;
           document.getElementById("app").classList.remove("heshPage");
           this.isAdmin=false;
@@ -104,7 +105,7 @@ export default {
           document.getElementById("app").classList.add("profPage");
 
         }
-        else if(index===3){
+        else if(page==="כניסת מנהל"){
           this.isHesh=false;
           document.getElementById("app").classList.remove("heshPage");
           this.isProf=false;
@@ -114,7 +115,7 @@ export default {
           document.getElementById("app").classList.add("adminPage");
         }
 
-        this.clickedNum = index;
+        this.clickedPage = page;
       },
       openMenu(binary){
         // console.log('clicked', binary);
@@ -235,6 +236,7 @@ html,  body{
 }
 
 /* media queries */
+
 @media only screen and (min-height: 850px) {
     #footer{
       top: calc(var(--vh, 1vh) * 2.9);
@@ -338,7 +340,21 @@ html,  body{
 }
 
 
-
+@media only screen and (min-width: 1050px) {
+  .heshPage{
+      height: calc(var(--vh, 1vh) * 1.5) !important;
+    }
+    .heshPageFooter{
+      top: calc(var(--vh, 1vh) * 1.5) !important;
+    }
+    #footer{
+      top: calc(var(--vh, 1vh) * 4.5) ;
+    }
+    #app{
+      height: calc(var(--vh, 1vh) * 4.5) ;
+    }
+    
+}
 
 
 

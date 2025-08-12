@@ -22,8 +22,12 @@ import { initializeApp } from "firebase/app";
 
 
 const firebaseConfig = {
-    ///get one yourself with firebase
-
+apiKey: "AIzaSyC5Pq4U0Ezfux5HPiUwPV0mDYq31VFV3kA",
+  authDomain: "machtzavim-site.firebaseapp.com",
+  projectId: "machtzavim-site",
+  storageBucket: "machtzavim-site.firebasestorage.app",
+  messagingSenderId: "33940484489",
+  appId: "1:33940484489:web:170c099bff51e1c6f87158"
 };
 
 const app = initializeApp(firebaseConfig);

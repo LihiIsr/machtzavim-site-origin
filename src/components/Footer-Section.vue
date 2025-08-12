@@ -1,7 +1,7 @@
 <template>
 <div id="container">
     <div id="info">
-        <p id="contact"><strong>צרו איתנו קשר!</strong></p>
+        <p id="contactCaption"><strong>צרו איתנו קשר!</strong></p>
         <div id="contactInfo">
             <div id="mail" class="flexRow">
             <p><a href="mailto:machtzavim@gmail.com">
@@ -17,7 +17,7 @@
             </div>
         </div>
     </div>
-    <v-footer border id="credits"> Copyright ©  {{ new Date().getFullYear() }}   —  Lihi Israeli, Machtzavim  <br> <p>All rights reserved</p> </v-footer>
+    <v-footer border id="credits" >   <p id="myCredits">האתר עוצב ונבנה ע"י ליהי ישראלי</p> <p> {{ new Date().getFullYear() }} © כל הזכויות שמורות יחידת מחצבי”ם </p> </v-footer>
 </div>
 </template>
 
@@ -32,6 +32,7 @@
     display: flex;
     position: sticky;
     width: 100%;
+    gap: 5px;
     justify-content: center;
     flex-direction: column;
 }
@@ -45,7 +46,7 @@
     border: 1px solid #1e285e;
 
 }
-#contact{
+#contactCaption{
     color: rgb(255, 255, 255);
     position: absolute;
     top: 7vh;
@@ -61,28 +62,22 @@
     flex-direction: column;
     position: absolute;
     top: 14vh;
-    width: 80vw;
+    width: fit-content;
     height: 30vh ;
-    /* justify-content:space-around ;     */
 }
 #contactInfo > div {
   margin: 5px;
-  /* padding: 5px; */
      width: 90vw;
     display: flex;
 
 }
 .flexRow{
     align-content: flex-start;
-    /* justify-content:flex-start ; */
-    /* justify-content: space-evenly; */
 }
 #mail{
-    /* display: flex; */
     width: 20vw;
 }
 #location{
-    /* display: flex; */
     width: 20vw;
 }
 #locationIcon{
@@ -99,8 +94,7 @@
     top: 2vh;
     font-family: Avenir, Helvetica, Arial, sans-serif;
     font-size: 5vw;
-
-    /* transform: translate(-50%); */
+     text-decoration:none;
 }
 #mailIcon{
     width: 24vw;
@@ -114,6 +108,47 @@
     margin-right: 16px;
     text-align: center;
     font-size: 4vw;
+    text-decoration:none;
+}
+
+@media only screen and (min-width: 1050px) {
+    #contactInfo{
+        left: 50%;
+        transform: translate(-50%, 0);
+        top: 16vh;
+        gap: 10px;
+    }
+    #locationIcon{
+        width: 6vw;
+        margin-right: 20px;
+    }
+    #mailIcon{
+        width: 8vw;
+        margin-right: 1vw;
+
+    }
+    #mailText {
+        font-size: 2vw;
+    }
+    #locationText{
+        font-size: 1.8vw;
+        margin-right: 13px;
+    }
+    #contactInfo > div{
+        width: 45vw;
+    }
+    #contactCaption{
+        font-size: 1.5vw !important;
+    }
+     #credits{
+      font-size: 1.5vw !important;
+    }
+    #mycredits{
+      font-size: 1vw !important;
+    }
+
+
 
 }
+
 </style>

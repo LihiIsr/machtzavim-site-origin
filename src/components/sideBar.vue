@@ -2,10 +2,10 @@
 <div>
    <div id="sideBar" class="side" :class="{openNavClass: isOpen, sideDark:isDark}">
         <img id="exit" :class="{darkenImg:isDark}" src="@/assets/images/x.svg" @click="closeMenu" />
-            <a @click="clickbtn(0)">ההשתלמויות שלנו</a>
-            <a @click="clickbtn(1)">המרצים שלנו</a>
-            <a @click="clickbtn(2)">חומרי עיון</a>
-            <a id="adminDiv" @click="clickbtn(3)">כניסת מנהל</a>
+            <a @click="handlePage('ההשתלמויות שלנו')">ההשתלמויות שלנו</a>
+            <a @click="handlePage('המרצים שלנו')">המרצים שלנו</a>
+            <a @click="handlePage(2)">חומרי עיון</a>
+            <a id="adminDiv" @click="handlePage('כניסת מנהל')">כניסת מנהל</a>
 
         <div id="LinkedinCard" >
              <a href="https://www.linkedin.com/in/lihi-israeli-4a674b358">
@@ -47,8 +47,8 @@ methods: {
       closeMenu(){
         this.$emit("close", false);
     },
-    clickbtn(i){
-        this.$emit("change", i);
+    handlePage(screen){
+        this.$emit("change", screen);
         this.$emit("close", false);
     },
 

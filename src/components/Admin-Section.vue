@@ -2,7 +2,7 @@
   <div id="heshInput">
     <div class="adminInput" v-if="!isTrue">
       <label> סיסמא: </label>
-      <input id="myInput" class="inputBox" :class="{darkBorder:isDarkMode}" type="password" ref="newPassword" placeholder='  הכנס סיסמא' />
+      <input id="myInput" @input="isIncorrect = false" class="inputBox" :class="{darkBorder:isDarkMode}" type="password" ref="newPassword" placeholder='  הכנס סיסמא' />
       <br>
       <span id="visibility">
       <input id="visibilityBtn" type="checkbox" @click="passwordVisibility">הצג סיסמא
@@ -11,6 +11,8 @@
 
       <button id="submitBtn" class="btns" :class="{darkBtns:isDarkMode}"  @click="checkPassword">  submit </button>
       <p id="incorrect" v-if="isIncorrect" >סיסמא לא נכונה, נסה שוב</p>
+
+
   </div>
 
     <div v-else>
@@ -65,21 +67,46 @@
   </div>
 </template>
 
+
 <script>
 import { getFirestore, collection, addDoc,doc, deleteDoc, 
-orderBy, onSnapshot,query, updateDoc, serverTimestamp } from "firebase/firestore";
+orderBy, onSnapshot,query, updateDoc, serverTimestamp, limit, getDocs } from "firebase/firestore";
 import { ref, onUnmounted } from 'vue';
 import { initializeApp } from "firebase/app";
 
 
-const firebaseConfig = {
-   ///get one yourself with firebase
 
+
+const firebaseConfig = {
+    apiKey: "AIzaSyC5Pq4U0Ezfux5HPiUwPV0mDYq31VFV3kA",
+  authDomain: "machtzavim-site.firebaseapp.com",
+  projectId: "machtzavim-site",
+  storageBucket: "machtzavim-site.firebasestorage.app",
+  messagingSenderId: "33940484489",
+  appId: "1:33940484489:web:170c099bff51e1c6f87158"
 };
 
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
+
+
+const yourCollectionRef = collection(db, 'login');
+
+const q = query(yourCollectionRef, orderBy("__name__"), limit(1)); // orderBy('__name__') sorts by document ID
+
+var correctPassword;
+
+getDocs(q)
+  .then((querySnapshot) => {
+    if (!querySnapshot.empty) {
+      const firstDoc = querySnapshot.docs[0]; // Get the first document snapshot
+      const fieldName = "password"; // Replace with the actual field name you want to retrieve
+      const correct = firstDoc.get(fieldName); // Using doc.get()
+      correctPassword = correct;
+    }
+  });
+ 
 
 
 export default{
@@ -103,8 +130,7 @@ export default{
                 }
         },
         checkPassword: function (){
-            ///just for development purposes, going to change
-            if ( this.$refs.newPassword.value == 'not telling you' ) {
+            if ( this.$refs.newPassword.value == correctPassword ) {
             this.isTrue = true;
             // set the form input back to initial state
              this.$refs.newPassword.value = "";

@@ -1,19 +1,20 @@
 <template>
   <div id="container" >
-     <div id="notMainFlex" v-if="numclicked < 4">
-        <p class="caption"> {{caption[numclicked]}} </p>
-        <img class="underline" id="underline1" v-if="numclicked <4" src="@/assets/images/blueUnderline3.png">
-        <img class="underline" id="underline2" v-else src="@/assets/images/blueUnderline3.png">
+     <div id="notMainFlex" v-if="pageClicked != 'mainPage'">
+        <p class="caption"> {{pageClicked}} </p>
+        <img class="underline" id="underlineCaption" src="@/assets/images/blueUnderline3.png">
     </div>
 
-    <ourHeshTalmoyut  v-if="numclicked == 0"></ourHeshTalmoyut>
+    <ourHeshTalmoyut  v-if="pageClicked == 'ההשתלמויות שלנו'"></ourHeshTalmoyut>
 
-    <profSection v-if="numclicked == 1"></profSection>
+    <profSection v-if="pageClicked == 'המרצים שלנו'"></profSection>
 
-    <admin :isDarkMode=isDark v-if="numclicked == 3"></admin>
+    <iframe v-if="pageClicked == 2" type="text/html" src="https://www.mako.co.il/pzm-soldiers/your-picture/Article-1454ac28cf86731006.htm?partner=tagit" width="500" height="500"></iframe>
+
+    <admin :isDarkMode=isDark v-if="pageClicked == 'כניסת מנהל'"></admin>
 
 
-    <div id="flexMainContainer" v-if="numclicked == 4">
+    <div id="flexMainContainer" v-if="pageClicked == 'mainPage'">
       
       <div>
             <p id="typeAnimation" :class="!isLoaded ? 'line-1' : 'line-1 noBorder'">נעים להכיר, יחידת</p>
@@ -39,7 +40,9 @@
           </p>
       </div>
 
+      
       <v-carousel
+      v-if="windowWidth <= 450"
         height="400"
         :show-arrows="false"
         cycle
@@ -51,17 +54,20 @@
           :src="item.src"
           
         >
-      
           </v-carousel-item>
         </v-carousel>
+
+        <div class="flexImgContainer" v-else>
+            <img  :class="[ i  != 1 ? 'sideImg' : 'mainImg' ]" v-for="(item, i) in items" :key="i" :src="item.src"/>
+        </div>
     
       <div id="flexQouteContainer">
         <div class="qouteDiv" style="align-self: flex-end;">
-            <p class="quoteMain">חשיבה מעמיקה, מאפשרת לך למידה רחבה, בעיקר של עצמך</p>
+            <p class="qouteText">חשיבה מעמיקה, מאפשרת לך למידה רחבה, בעיקר של עצמך</p>
         </div>
         <p class="qouteCaption">ערכי היסוד שלנו</p>
         <div class="qouteDiv">
-            <p class="quoteMain">החובה לפעול ליצירת שיח ערכי בצבא ובפרט בעת מלחמה</p>
+            <p class="qouteText">החובה לפעול ליצירת שיח ערכי בצבא ובפרט בעת מלחמה</p>
 
         </div>
       </div>
@@ -70,7 +76,7 @@
     
         <div>
         <p class="caption heshListCaption" id="actionsCaption">רשימת השתלמויות לשנה הנוכחית:</p>
-            <img class="underline" id="underline4"  src="@/assets/images/blueUnderline3.png">
+            <img class="underline" id="underlineHeshCaption"  src="@/assets/images/blueUnderline3.png">
         </div>
 
         <heshtalmotList >
@@ -99,6 +105,7 @@ import ourHeshTalmoyut from './OurHesh-section.vue'
   },
     data () {
       return {
+        windowWidth: window.innerWidth,
          items: [
           {
             src: require('@/assets/images/sliderSecond.jpg'),
@@ -109,22 +116,17 @@ import ourHeshTalmoyut from './OurHesh-section.vue'
           {
             src: require('@/assets/images/slider333.png'),
           },
-        ],
-        caption: [
-         'ההשתלמויות שלנו' ,
-         'המרצים שלנו',
-         'חומרי עיון',
-         'כניסת מנהל'
-        ],
+        ]
       }
     },
     props: {
-      numclicked:Number,
+      pageClicked:String,
       isLoaded:Boolean,
       isDark: Boolean 
 
     },
     mounted(){
+      window.addEventListener('resize', this.updateWidth);
       console.log(this.isLoaded)
       if(!this.isLoaded){
           console.log(this.isLoaded)
@@ -150,9 +152,15 @@ import ourHeshTalmoyut from './OurHesh-section.vue'
               document.getElementById("smallLetter4").classList.add("appearAnimation");
 
             }, 10000);
-
-      }
-    },
+      }},
+      beforeUnmount() {
+        window.removeEventListener('resize', this.updateWidth);
+      },
+      methods: {
+        updateWidth() {
+          this.windowWidth = window.innerWidth;
+        }
+      },
    
   }
 
@@ -175,7 +183,7 @@ import ourHeshTalmoyut from './OurHesh-section.vue'
   flex-direction: column-reverse;
   gap: 25px;
 }
-#underline1{
+#underlineCaption{
  width: 73vw;
     height: 2vh;
     left: 13vw;
@@ -242,7 +250,7 @@ import ourHeshTalmoyut from './OurHesh-section.vue'
   color:#d5dcff;
 
 }
-.quoteMain{
+.qouteText{
   font-family: 'bibical';
   position: relative;
   text-align: center;
@@ -274,7 +282,7 @@ import ourHeshTalmoyut from './OurHesh-section.vue'
   top: -3vh;
 }
 
-#underline4{
+#underlineHeshCaption{
   position: relative;
   width: 82vw;
     height: 2vh;
@@ -346,6 +354,29 @@ import ourHeshTalmoyut from './OurHesh-section.vue'
   direction: rtl;
 }
 
+.flexImgContainer{
+  position: relative;
+  display: flex;
+  width: 100vw;
+  left: 0;
+  top: 2vh;
+  height: fit-content;
+  justify-content: space-evenly;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.mainImg{
+  width: 30vw;
+  height: 20vh;
+}
+
+.sideImg{
+  width: 27vw;
+  height: 42vh;
+}
+
 /* עד כאן לגזור*/
 
 
@@ -412,6 +443,97 @@ import ourHeshTalmoyut from './OurHesh-section.vue'
   from{width: 0;}
   to{width: 9em;}
 }
+
+
+@media only screen and (min-width: 1050px) {
+
+  #underlineCaption {
+    width: 55vw;
+    height: 3vh;
+    left: 22vw;
+    top: 7.5vh;
+  }
+  .caption{
+    font-size: 4vw;
+  }
+  #captionDivided{
+      gap: 18px !important;
+    }
+    .line-1{
+      font-size: 4vw !important;
+    }
+    .smallLetter{
+      font-size: 4vw !important;
+
+    }
+    #ourVisionText{
+      font-size: 2.2vw !important;
+      margin-left: 64px;
+      margin-right: 64px;
+    }
+    .qouteText{
+      font-size: 2.5vw !important;
+    }
+    .qouteDiv {
+      height: 35vh;
+      margin: 54px;
+      width: 50vw;
+    }
+    .qouteCaption{
+      font-size: 3vw !important;
+
+    }
+    #underlineHeshCaption{
+        width: 63vw !important;
+        height: 4vh !important;
+        left: 18vw !important;
+        top: 1.5vh !important;
+    }
+    .heshListCaption{
+      font-size: 3vw !important;
+    }
+    #heshtalListMain{
+      font-size: 2vw !important;
+    }
+    #flexQouteContainer{
+    margin-top: 26px !important;
+    width: 92vw;
+    left: 50%;
+    transform: translate(-50%, 0);
+    }
+    #flexMainContainer{
+      gap: 70px !important;
+    }
+    .mainImg {
+    width: 31vw;
+    height: 45vh;
+    }
+
+}
+
+@media only screen and (min-width: 1200px) {
+  .sideImg {
+    width: 28vw;
+    height: 56vh;
+  }
+  .mainImg {
+    width: 35vw;
+    height: 63vh;
+  }
+  #underlineCaption {
+        top: 10.5vh;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    #logo {
+        width: 10vw;
+    }
+}
+
+
+
+
 
 </style>
 
