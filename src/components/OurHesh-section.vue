@@ -69,7 +69,6 @@ export default {
 
 .ourHeshtalmuyotFlexMobile{
   position: relative;
-  top:5vh;
   display: flex;
   flex-direction: column;
   gap: 20px;

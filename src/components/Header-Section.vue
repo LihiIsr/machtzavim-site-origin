@@ -4,18 +4,26 @@
             <div id="banner">
                 <img id="logo" src="@/assets/images/logoLight1.png" @click="handlePage('mainPage')">
                 
-                <div class="switch">
+                <div class="switch" :class="{moveSwitch: !isMobile}">
                   <label class="theme-switch" for="checkbox">
                     <input type="checkbox" id="checkbox" v-model="isDark" @change="changeMode" />
                     <div class="slider round"></div>
                   </label>
                 </div>
 
-                <div id="hamburger" @click="openMenu">
+                <div v-if="isMobile" id="hamburger" @click="openMenu">
                     <span class="hamburger-line first-line"></span>
                     <span class="hamburger-line"></span>
                     <span class="hamburger-line"></span>
                   </div>
+                <span v-if="!isMobile">
+                    <ul class="navBar" >
+                        <li class="link" :class="{darkLink:isDark}" @click="handlePage('ההשתלמויות שלנו')">ההשתלמויות שלנו</li>
+                        <li class="link" :class="{darkLink:isDark}" @click="handlePage('המרצים שלנו')">המרצים שלנו</li>
+                        <li class="link" :class="{darkLink:isDark}" @click="handlePage('חומרי עיון')">חומרי עיון</li>
+                        <li class="link" :class="{darkLink:isDark}" @click="handlePage('כניסת מנהל')">כניסת מנהל</li>
+                    </ul>
+              </span>
 
             </div>
           </div>
@@ -25,9 +33,13 @@
 <script>
 
   export default {
+    props:{
+          isMobile: Boolean,
+
+    },
     data: () => ({
       toggleMenu: false,
-      isDark: false
+      isDark: false,
     }),
     methods: {
       openMenu(){
@@ -41,12 +53,12 @@
       changeMode(){
         console.log(this.isDark);
         if(this.isDark){
-          document.getElementById("app").style.backgroundColor = '#09092c';
+          // document.getElementById("app").style.backgroundColor = '#09092c';
            document.getElementById("app").classList.add("dark");
             this.$emit("isDark", true);
         }
         else{
-          document.getElementById("app").style.backgroundColor = 'rgb(143 175 207 / 32%)';
+          // document.getElementById("app").style.backgroundColor = 'rgb(143 175 207 / 32%)';
           document.getElementById("app").classList.remove("dark");
             this.$emit("isDark", false);
         }
@@ -71,7 +83,6 @@
 }
 #banner{
     position: absolute;
-    background-color: #09092c;
     background-color: rgb(12 18 53);
     width: 100vw;
     height: 10vh;
@@ -129,43 +140,52 @@
 
 /* ///dark light mode */
 .switch {
-    height: fit-content;
-    position: absolute;
-    left: 20vw;
-    top: 3.5vh;
+  position: absolute;
+  left: 20vw;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
 }
-    
+
+.moveSwitch {
+  left: 2vw;
+}
+
 .theme-switch {
   display: inline-block;
+  width: 60px;
   height: 20px;
   position: relative;
-  width: 60px;
 }
 
 .theme-switch input {
-  display:none;
+  display: none;
 }
 
 .slider {
-  background-color: #ccc;
-  bottom: 0;
-  cursor: pointer;
-  left: 0;
   position: absolute;
-  right: 0;
   top: 0;
-  transition: .4s;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  border-radius: 34px;
+  cursor: pointer;
+  transition: 0.4s;
 }
 
 .slider:before {
-  background-color: #fff;
-  bottom: 3px;
   content: "";
-  height: 14px;
-  left: 5px;
   position: absolute;
-  transition: .4s;
+  top: 50%;
+  left: 3px;
   width: 14px;
+  height: 14px;
+  background-color: #fff;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  transition: 0.4s;
 }
 
 input:checked + .slider {
@@ -173,17 +193,8 @@ input:checked + .slider {
 }
 
 input:checked + .slider:before {
-  transform: translateX(33px);
+  transform: translateY(-50%) translateX(33px);
 }
-
-.slider.round {
-  border-radius: 34px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
-}
-
 
 
 @media only screen and (min-width: 1050px) {
@@ -197,6 +208,42 @@ input:checked + .slider:before {
       height: 11vh;
     }
     
+
+}
+
+.navBar{
+    direction: rtl;
+    position: absolute;
+    display: flex;
+    flex-wrap: nowrap;
+    list-style-type: none;
+    gap: 3rem;
+    left: 9vw;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.link{
+    background-color: #ccc;
+    border-radius: 25px;
+    width: 10rem;
+    text-align: center;
+    cursor: pointer;
+
+}
+
+.link:hover{
+      background-color: #a29f9f;
+
+}
+
+.darkLink{
+    color: #fff;
+    background-color: #2b2b2b;
+    
+}
+
+.darkLink:hover{
+      background-color: #555353;
 
 }
 

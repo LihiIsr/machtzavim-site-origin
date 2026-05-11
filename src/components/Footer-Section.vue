@@ -1,21 +1,27 @@
 <template>
 <div id="container">
     <div id="info">
-        <p id="contactCaption"><strong>צרו איתנו קשר!</strong></p>
-        <div id="contactInfo">
-            <div id="mail" class="flexRow">
-            <p><a href="mailto:machtzavim@gmail.com">
-            <img id="mailIcon" src="@/assets/images/mailIcon.png">
-            </a></p>
-            <a href="mailto:machtzavim@gmail.com" id=mailText>machtzavim@gmail.com</a>
-            </div>
-            <div id="location" class="flexRow">
-            <p><a href="https://maps.app.goo.gl/thAw2YpaqrcsPB717">
-            <img id="locationIcon" src="@/assets/images/location2.png">
-            </a></p>
-            <a href="https://maps.app.goo.gl/thAw2YpaqrcsPB717" id="locationText">שלמה זלמן שרגאי 5, ירושלים</a>
-            </div>
+        <p id="contactCaption"><strong>תמיד כאן בשבילכם</strong></p>
+        <div id="newContactInfo">
+            <span class="contact-col contact-col-img">
+            <p>
+                <a href="mailto:machtzavim@gmail.com">
+                <img id="mailIcon" src="@/assets/images/mailIcon.png">
+                </a>
+            </p>
+            <p>
+                <a href="https://maps.app.goo.gl/thAw2YpaqrcsPB717">
+                <img id="locationIcon" src="@/assets/images/location.png">
+                </a>
+            </p>
+            </span>
+            <span class="contact-col contact-col-text">
+                <a href="mailto:machtzavim@gmail.com" id=mailText>machtzavim@gmail.com</a>
+                <a href="https://maps.app.goo.gl/thAw2YpaqrcsPB717" id="locationText">שלמה זלמן שרגאי 5, ירושלים</a>
+
+            </span>
         </div>
+        <img id="bannerLogos" src="@/assets/images/banner.png" alt="logos"/>
     </div>
     <v-footer border id="credits" >   <p id="myCredits">האתר עוצב ונבנה ע"י ליהי ישראלי</p> <p> {{ new Date().getFullYear() }} © כל הזכויות שמורות יחידת מחצבי”ם </p> </v-footer>
 </div>
@@ -23,132 +29,161 @@
 
 
 <style>
-#container{
+#container {
     direction: rtl;
-    width: 100vh;
-    height: 30vh;
-}
-#credits{
-    display: flex;
-    position: sticky;
     width: 100%;
-    gap: 5px;
-    justify-content: center;
-    flex-direction: column;
+    overflow-x: hidden;
 }
-#info{
+
+#info {
     direction: rtl;
+    width: 100%;
     height: 50vh;
-    width: 100vw;
-    /* background-color: rgb(73, 101, 77); */
-    background-color: rgb(12 18 53);
-    /* border:1px solid rgba(29, 49, 26, 0.829); */
-    border: 1px solid #1e285e;
-
-}
-#contactCaption{
-    color: rgb(255, 255, 255);
-    position: absolute;
-    top: 7vh;
-    right: 2vw;
-    left: 50%;
-    transform: translate(-50%);
-    text-align: center;
-    font-size: 4vw;
-
-}
-#contactInfo{
     display: flex;
     flex-direction: column;
-    position: absolute;
-    top: 14vh;
-    width: fit-content;
-    height: 30vh ;
-}
-#contactInfo > div {
-  margin: 5px;
-     width: 90vw;
-    display: flex;
-
-}
-.flexRow{
-    align-content: flex-start;
-}
-#mail{
-    width: 20vw;
-}
-#location{
-    width: 20vw;
-}
-#locationIcon{
-    width: 16vw;
-    height: 9vh;
-    margin-right: 15px;
-    filter: brightness(0) invert(1);
-
+    align-items: center;
+    justify-content: center; /* center the two rows vertically */
+    background-color: rgb(12 18 53);
+    border: 1px solid #1e285e;
 }
 
-#mailText{
-    color: rgb(255, 255, 255);
-    position: relative;
-    top: 2vh;
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    font-size: 5vw;
-     text-decoration:none;
-}
-#mailIcon{
-    width: 24vw;
-    height: 8vh;
-    filter: brightness(0) invert(1);
-}
-#locationText{
-    position: relative;
-    top: 2vh;
-    color: rgb(255, 255, 255);
-    margin-right: 16px;
+/* Contact Info */
+#contactCaption {
+    color: white;
     text-align: center;
-    font-size: 4vw;
-    text-decoration:none;
+    font-size: 4vw; /* mobile-friendly */
+    margin-bottom: 4vh;
 }
 
-@media only screen and (min-width: 1050px) {
-    #contactInfo{
-        left: 50%;
-        transform: translate(-50%, 0);
-        top: 16vh;
-        gap: 10px;
-    }
-    #locationIcon{
-        width: 6vw;
-        margin-right: 20px;
-    }
-    #mailIcon{
-        width: 8vw;
-        margin-right: 1vw;
+#contactInfo {
+    display: flex;
+    flex-direction: column; /* keep two rows stacked */
+    align-items: center;
+    justify-content: center;
+    /* gap: 1.5rem; */
+}
 
+#contactInfo > div {
+    display: flex;
+    align-items: center; /* icon & text vertically aligned */
+    justify-content: center; /* center horizontally */
+    gap: 10px;
+    width: 90vw; /* mobile row width */
+    margin: 0 auto;
+}
+
+#contactInfo p {
+    margin: 0;
+    padding: 0;
+}
+
+#mailIcon,
+#locationIcon {
+    width: 24vw; /* mobile size */
+    height: auto;
+    filter: brightness(0) invert(1);
+}
+
+#locationIcon{
+    width: 17vw;
+}
+
+#mailText,
+#locationText {
+    color: white;
+    font-size: 5vw; /* mobile font size */
+    text-decoration: none;
+}
+
+#locationText{
+    font-size: 4.2vw;
+}
+
+/* Footer */
+#credits {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 0.3rem;
+    padding: 1rem 0;
+}
+
+#myCredits {
+    font-size: 1rem;
+}
+
+
+#bannerLogos {
+    border-radius: 80px;
+    width: 18rem;
+    align-self: center;
+}
+
+/* Desktop Overrides */
+@media only screen and (min-width: 1050px) {
+    #contactCaption {
+        font-size: 1.5vw !important;
+        /* align-self: flex-start;
+        margin-right: 42px; */
     }
+
+    #bannerLogos{
+    width: 30rem;
+    align-self: end;
+}
+
+    #contactInfo > div {
+        width: 45vw; /* desktop row width */
+        gap: 1rem;
+    }
+
+    #mailIcon {
+        width: 6vw;
+    }
+
+    #locationIcon {
+        width: 4vw;
+    }
+
     #mailText {
-        font-size: 2vw;
+        font-size: 1.5vw;
     }
-    #locationText{
-        font-size: 1.8vw;
-        margin-right: 13px;
+
+    #locationText {
+        font-size: 1.3vw;
     }
-    #contactInfo > div{
-        width: 45vw;
-    }
-    #contactCaption{
+
+    #credits {
         font-size: 1.5vw !important;
     }
-     #credits{
-      font-size: 1.5vw !important;
+
+    #myCredits {
+        font-size: 1.3vw !important;
     }
-    #mycredits{
-      font-size: 1vw !important;
-    }
-
-
-
 }
+
+#newContactInfo{
+    display: flex;
+    flex-direction: row;
+    align-self: baseline;
+}
+
+.contact-col{
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-col-text{
+    gap: 33px;
+    margin-top: 13px;
+    align-items: flex-start;
+}
+
+.contact-col-img{
+    align-items: center;
+}
+
 
 </style>

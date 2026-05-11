@@ -1,6 +1,6 @@
 <template>
 <div class="ProfCardsContainer">
-  <div class="firstProfFlex">
+  <div class="profFlex">
     <div
         v-for="(image, i) in profCardsCurr"
         :key="i"
@@ -14,11 +14,13 @@
             <img class="avatarImg" :src="profCardsCurr[i].src" />
             <p class="profName"> פרופ' {{profCardsCurr[i].name}} </p>
             <p class="profSubtitle">הסבר קצר על תחום עיסוקו</p>
-                <p class="profText">הסבר ארוך יותר על המרצה. למשל: בעל תואר במדעי החברה ופעיל לטובת ארגון מסויים</p>
-            <button class="readMore" @click="toggleFlip(profCardsCurr[i].id)" v-if="profCardsCurr[i].moreInfo">קרא עוד >></button>
+        <p class="profText" v-if="!isMobile">הסבר ארוך יותר על המרצה. למשל: בעל תואר במדעי החברה ופעיל לטובת ארגון מסויים</p>          
+        <button class="readMore" @click="toggleFlip(profCardsCurr[i].id)" v-if="isMobile && profCardsCurr[i].moreInfo">קרא עוד >></button>
         </div>
 
         <div class="flip-card-back">
+          <p class="profText" v-if="isMobile">הסבר ארוך יותר על המרצה. למשל: בעל תואר במדעי החברה ופעיל לטובת ארגון מסויים</p>
+          
             <button class="readLess" @click="toggleFlip(profCardsCurr[i].id)" v-if="profCardsCurr[i].moreInfo"> >> חזור</button>
         </div>
     </div>
@@ -37,7 +39,12 @@
 
 
 export default {
+   props:{
+          isMobile: Boolean,
+
+    },
     data() {
+      
         return{
            firstProf:true,
            profCardsCurr:[],
@@ -177,11 +184,7 @@ export default {
             {
               id:3,src: require('@/assets/images/blankImg.png'), name:'נעמי', info:'', moreInfo: 'go fucking fuck urself'
             }
-          ,
-            {
-              src: require('@/assets/images/blankImg.png'), name:'שרה' ,info:'', moreInfo: ''
-            }
-
+          
         ],
 
 
@@ -221,6 +224,9 @@ export default {
 </script>
 
 <style>
+/* make sizing predictable */
+*, *::before, *::after { box-sizing: border-box; }
+
 .profImg{
   width: 40vw;
   height: 20vh;
@@ -231,20 +237,18 @@ export default {
 }
 
 .ProfCardsContainer{
-  flex-direction: column;
-  top: 11vh;
+  position: relative;      /* no absolute centering that causes overflow */
+  margin-top: 11vh;
   direction: rtl;
-  width: fit-content;
-  flex-wrap: wrap;
-  gap: 10px;
-  left: 50%;
-  transform: translate(-50%,-0%);
-  position: absolute;
+  width: 100%;
+  max-width: 1200px;       /* keep the whole block centered and limited */
+  margin: 0 auto;
+  padding: 0 16px;
   display: flex;
-  justify-items: center;
-  justify-content: center;
-
+  flex-direction: column;
+  gap: 30px;
 }
+
 #ourProf{
   height: 60vh;
 }
@@ -255,6 +259,8 @@ export default {
   text-align: center;
   font-size: 4vw;
   justify-content: center;
+  cursor: pointer;
+  margin-bottom: 5vh;
 }
 
 .paginationCircle{
@@ -270,25 +276,16 @@ export default {
 
 .clickedProf{
   background-color: rgb(192 201 211);
-
 }
 
 /* card style */
 
-.readMore{
-    position: relative;
-    left: -38vw;
-    top: -4vh;
-    font-size: 2.5vw;
-    font-weight: 600;
-}
-
-.readLess{
-    position: relative;
-    top: 22vh;
-    right: 77vw;
-    /* top: -1vh; */
-    font-size: 3.5vw;
+.readMore,
+ .readLess{
+    position: absolute;
+    bottom: 1vh;
+    left: 5vw;
+    font-size: 3vw;
     font-weight: 600;
 }
 
@@ -298,42 +295,52 @@ export default {
 }
 
 .avatarImg {
-    width: 23vw;
+    width: 51%;
+    max-width: 140px;
+    height: 71%;
+    display: block;
+}
+.profText{
+  margin: 5px;
 }
 
-.firstProfFlex{
+.profFlex{
     display: flex;
-    flex-direction: column;
-    width: 100vw;
-        /* /fit cont */
-
+    flex-direction: column;  
     gap: 10px;
-    left: -2vw;
-    position: relative;
+    width: 100%;
+    align-items: center;
     color: black;
 }
 
+.profFlex {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
 
 /* prof flip card */
 
-/* This container is needed to position the front and back side */
 .flip-card-inner {
     background-color:rgb(232 234 246);
-  transition: transform 0.8s;
-  transform-style: preserve-3d;
-  transition: transform 0.8s;
+    transition: transform 0.8s;
     transform-style: preserve-3d;
-    width: 95vw;
+    height: auto;          /* let it grow based on content */
+    min-height: 30vh;      /* keeps a nice minimum height */
+    width: 95%;              /* mobile: nearly full width */
+    max-width: 520px;
     height: 30vh;
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
-    }
+    position: relative;
+}
 
 .flipped{
     transform: rotateY(180deg);
-
 }
 
-.flip-card-inner .flip-card-front, .flip-card-inner .flip-card-back{
+.flip-card-inner .flip-card-front, 
+.flip-card-inner .flip-card-back {
   width: 100%;
   height: 100%;
   position: absolute;
@@ -345,7 +352,6 @@ export default {
 }
 
 .flip-card-inner  .flip-card-back {
-    
     -o-transform: rotateY(180deg);
     -webkit-transform: rotateY(180deg);
     -ms-transform: rotateY(180deg);
@@ -356,47 +362,65 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 4px;
-    left: -2vw;
-
+    right: 0.5rem;
 }
 
+.flip-card-front{
+  display: flex;
+flex-direction: column;
+height: 100%;
+gap: 0.5rem;
+}
+
+/* Desktop layout */
 @media only screen and (min-width: 1050px) {
-  .flip-card-inner {
-      width: 68vw;
-      height: 38vh;
-    }
-    .firstProfFlex{
-      width: fit-content;
+  .profFlex{
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    align-items: stretch;
   }
+
+  .flip-card-inner {
+    flex: 0 1 calc(33.333% - 20px); /* 3 per row */
+    width: calc(33.333% - 20px);
+    max-width: 360px;
+    height: 50vh;
+  }
+
   .avatarImg {
-      width: 9vw;
+    width: 71%;
+    max-width: 120px;
+  }
+  .profText{
+    margin: 0;
   }
   .profName {
     font-size: 2vw;
+    font-size: clamp(1rem, 5vw, 1.5rem);
   }
   .profSubtitle{
     font-size: 1.5vw;
+    font-size: clamp(0.8rem, 3.5vw, 1.2rem);
+
   }
-  .readMore{
-    left: -59vw;
-    width: fit-content;
-    top: -1vh;
-    font-size: 1vw;
-  }
-  .flip-card-inner .flip-card-front .flip-card-back{
-    left: -1vw;
-  }
-  .readLess{
-    top: 25vh;
-    right: 60vw;
-    font-size: 1vw;
-  }
+
+  .readMore, .readLess {
+    font-size: clamp(0.7rem, 2.5vw, 1rem);
+}
+
   .ProfCardsContainer{
-    top: 18vh;
+    margin-top: 18vh;
   }
 }
 
-
-
+ .paginationCircle {
+    width: 36px;
+    height: 36px;
+  }
+  .paginationText {
+    font-size: 0.9rem;
+  }
 
 </style>

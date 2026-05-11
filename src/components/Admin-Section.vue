@@ -1,5 +1,5 @@
 <template>
-  <div id="heshInput">
+  <div id="adminSection">
     <div class="adminInput" v-if="!isTrue">
       <label> סיסמא: </label>
       <input id="myInput" @input="isIncorrect = false" class="inputBox" :class="{darkBorder:isDarkMode}" type="password" ref="newPassword" placeholder='  הכנס סיסמא' />
@@ -9,7 +9,7 @@
       </span>
       <br>
 
-      <button id="submitBtn" class="btns" :class="{darkBtns:isDarkMode}"  @click="checkPassword">  submit </button>
+      <button id="submitBtn" class="btns" :class="{darkBtns:isDarkMode}"  @click="checkPassword">  התחבר </button>
       <p id="incorrect" v-if="isIncorrect" >סיסמא לא נכונה, נסה שוב</p>
 
 
@@ -91,6 +91,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 
+/// a way to retrieve the password without it showing here, by getting it from db
 const yourCollectionRef = collection(db, 'login');
 
 const q = query(yourCollectionRef, orderBy("__name__"), limit(1)); // orderBy('__name__') sorts by document ID
@@ -101,7 +102,7 @@ getDocs(q)
   .then((querySnapshot) => {
     if (!querySnapshot.empty) {
       const firstDoc = querySnapshot.docs[0]; // Get the first document snapshot
-      const fieldName = "password"; // Replace with the actual field name you want to retrieve
+      const fieldName = "password"; 
       const correct = firstDoc.get(fieldName); // Using doc.get()
       correctPassword = correct;
     }
@@ -133,13 +134,12 @@ export default{
             if ( this.$refs.newPassword.value == correctPassword ) {
             this.isTrue = true;
             // set the form input back to initial state
-             this.$refs.newPassword.value = "";
             }
             else{
             this.isIncorrect = true;
+            }
              this.$refs.newPassword.value = "";
 
-            }
         },
         addNewHesh: async function(){
             const docRef = await
@@ -180,70 +180,133 @@ export default{
 </script>
 
 <style>
-#heshInput{
-    position: relative;
-    top: 5vh;
-}
-#heshtalList{
-  text-align: center;
+#adminSection {
   position: relative;
-  top: 25vh;
+  margin-top: 5vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 2rem;
+  min-height: 60vh;
+}
+
+/* each form section */
+.adminInput {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  direction: ltr;
+  text-align: right;
+  gap: 0.8rem;
+  font-size: 4vw; /* mobile size */
+  width: 80vw;
+  max-width: 400px;
+}
+
+/* input styling */
+.inputBox {
+  direction: rtl;
+  outline: 1px dashed black;
+  width: 100%;
+  text-align: center;
+  font-size: 4vw;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 4px;
+}
+
+/* button */
+.btns {
+  border: 1px solid black;
+  font-size: 4vw;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  align-self: auto;
+}
+
+/* error / visibility text aligned normally */
+#visibility {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 3.5vw;
+}
+
+#visibilityBtn {
+  width: 1.2em;
+  height: 1.2em;
+}
+
+#incorrect {
+  color: red;
+  font-size: 3.5vw;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+/* list styling */
+#heshtalList {
   list-style: none;
-    font-size: 3.5vw;
-
-}
-.inputBox{
-    direction: rtl;
-    /* border: 1px solid black; */
-    outline: 1px dashed black;
-    width: 60vw;
-    text-align: center;
+  text-align: center;
+  font-size: 3.5vw;
+  padding: 0;
+  margin-top: 2rem;
+  width: 100%;
 }
 
-.btns{ 
-    border: 1px solid black
-}
-.adminInput{
-    position: absolute;
-    left: 4vw;
-    font-size: 4vw;
-    height: 10vh;
-    width: max-content;
-}
-#personalInfo{
-    direction: rtl;
-    position: relative;
-    top: 28vh;
+/* personal info card */
+#personalInfo {
+  direction: rtl;
+  width: 80vw;
+  max-width: 400px;
+  margin-top: 4rem;
+  margin-bottom: 2rem;
+  text-align: center;
 }
 
-#submitBtn{
-    position: absolute;
-    top:10vh;
+/* dark mode overrides */
+.darkBorder {
+  outline: 1px dashed white;
+  color: white;
 }
 
-#visibility{
-    position: absolute;
-    top: 5vh;
+.darkBtns {
+  border: 1px solid white;
 }
 
-#visibilityBtn{
-    width: 10vw;
-    height: 2.5vh;
+/* ---------- Desktop ---------- */
+@media (min-width: 768px) {
+  #adminSection {
+    gap: 2rem;
+  }
+
+  .adminInput {
+    font-size: 1rem;
+    width: 350px;
+  }
+
+  .inputBox {
+    font-size: 1rem;
+  }
+
+  .btns {
+    font-size: 1rem;
+  }
+
+  #visibility {
+    font-size: 0.9rem;
+  }
+
+  #incorrect {
+    font-size: 0.9rem;
+  }
+
+  #heshtalList {
+    font-size: 1rem;
+  }
 }
 
-#incorrect{
-    position: absolute;
-    top: 3vh;
-    left: 42vw;
-}
-
-.darkBorder{
-    outline: 1px dashed white;
-    color: white;
-}
-
-.darkBtns{
-    border: 1px solid white;
-}
 
 </style>

@@ -1,36 +1,44 @@
 <template>
 <div>
-   <div id="sideBar" class="side" :class="{openNavClass: isOpen, sideDark:isDark}">
-        <img id="exit" :class="{darkenImg:isDark}" src="@/assets/images/x.svg" @click="closeMenu" />
-            <a @click="handlePage('ההשתלמויות שלנו')">ההשתלמויות שלנו</a>
-            <a @click="handlePage('המרצים שלנו')">המרצים שלנו</a>
-            <a @click="handlePage(2)">חומרי עיון</a>
-            <a id="adminDiv" @click="handlePage('כניסת מנהל')">כניסת מנהל</a>
+    <span v-if="isMobile">
+        <div id="sideBar" class="side" :class="{openNavClass: isOpen, sideDark:isDark}">
 
-        <div id="LinkedinCard" >
-             <a href="https://www.linkedin.com/in/lihi-israeli-4a674b358">
-                <img class="LinkedinIcon"  src="@/assets/images/linkedinIcon.png"/>
-            </a>
-            <span id="LinkedinCardMiddle">
-                <p id="cardTitle">Lihi on LinkedIn</p>
-                <p style="font-size: 3.5vw;">Check out the developer's account!</p>
-            </span>
-            <a href="https://www.linkedin.com/in/lihi-israeli-4a674b358">
-                <img class="LinkIcon" :class="{darkenImg:isDark}" src="@/assets/images/boxThing.svg" />
-            </a>
+                    <img id="exit" :class="{darkenImg:isDark}" src="@/assets/images/x.svg" @click="closeMenu" />
+                        <a @click="handlePage('ההשתלמויות שלנו')">ההשתלמויות שלנו</a>
+                        <a @click="handlePage('המרצים שלנו')">המרצים שלנו</a>
+                        <a @click="handlePage('חומרי עיון')">חומרי עיון</a>
+                        <a id="adminDiv" @click="handlePage('כניסת מנהל')">כניסת מנהל</a>
+                        
 
+                    <div id="LinkedinCard" >
+                        <a href="https://www.linkedin.com/in/lihi-israeli-4a674b358">
+                            <img class="LinkedinIcon"  src="@/assets/images/linkedinIcon.png"/>
+                        </a>
+                        <span id="LinkedinCardMiddle">
+                            <p id="cardTitle">Lihi on LinkedIn</p>
+                            <p style="font-size: 3.5vw;">Check out the developer's account!</p>
+                        </span>
+                        <a href="https://www.linkedin.com/in/lihi-israeli-4a674b358">
+                            <img class="LinkIcon" :class="{darkenImg:isDark}" src="@/assets/images/boxThing.svg" />
+                        </a>
+
+                    </div>
+                
         </div>
-   </div>
+            <div id="shadow" v-show="isOpen" @click="closeMenu"></div>
+    </span>
 
-    <div id="shadow" v-show="isOpen" @click="closeMenu"></div>
+
 </div>
 </template>
 
 <script>
+
 export default {
      props:{
         isOpen: Boolean ,
-        isDark: Boolean 
+        isDark: Boolean ,
+        isMobile: Boolean
     },
      data() {
       return {
@@ -48,6 +56,7 @@ methods: {
         this.$emit("close", false);
     },
     handlePage(screen){
+        console.log(this.isMobile);
         this.$emit("change", screen);
         this.$emit("close", false);
     },
@@ -169,4 +178,5 @@ overflow-y: hidden;
      -webkit-filter: invert(100%); /* Safari/Chrome */
     filter: invert(100%);
 }
+
 </style>
