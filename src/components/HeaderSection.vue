@@ -34,33 +34,28 @@
 
   export default {
     props:{
-          isMobile: Boolean,
+      isMobile: Boolean,
 
     },
     data: () => ({
-      toggleMenu: false,
       isDark: false,
     }),
     methods: {
       openMenu(){
-        this.toggleMenu = true;
-        this.$emit("open", this.toggleMenu);
+        this.$emit("open");
       },
       handlePage(i){
-        this.$emit("changePage", i);
+        this.$emit("change-page", i);
 
       },
       changeMode(){
-        console.log(this.isDark);
         if(this.isDark){
-          // document.getElementById("app").style.backgroundColor = '#09092c';
            document.getElementById("app").classList.add("dark");
-            this.$emit("isDark", true);
+            this.$emit("toggle-dark", true);
         }
         else{
-          // document.getElementById("app").style.backgroundColor = 'rgb(143 175 207 / 32%)';
           document.getElementById("app").classList.remove("dark");
-            this.$emit("isDark", false);
+            this.$emit("toggle-dark", false);
         }
       }
     }

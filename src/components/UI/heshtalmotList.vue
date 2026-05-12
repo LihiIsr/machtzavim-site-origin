@@ -63,7 +63,6 @@ export default{
 <style>
 #heshList{
     position: relative;
-    /* top: 20vh; */
 }
 #heshtalListMain{
   text-align: center;

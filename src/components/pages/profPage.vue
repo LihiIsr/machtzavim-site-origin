@@ -215,8 +215,6 @@ export default {
         toggleFlip(id){
             var element = document.getElementById(id);
              element.classList.toggle('flipped');
-            console.log(id);
-            console.log("flipped");
         }
     }
 

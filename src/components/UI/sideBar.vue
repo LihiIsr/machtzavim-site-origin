@@ -1,14 +1,19 @@
 <template>
 <div>
-    <span v-if="isMobile">
-        <div id="sideBar" class="side" :class="{openNavClass: isOpen, sideDark:isDark}">
+    <div v-if="isMobile">
+        <div class="side" :class="{openNavClass: isOpen, sideDark:isDark}">
 
                     <img id="exit" :class="{darkenImg:isDark}" src="@/assets/images/x.svg" @click="closeMenu" />
-                        <a @click="handlePage('ההשתלמויות שלנו')">ההשתלמויות שלנו</a>
-                        <a @click="handlePage('המרצים שלנו')">המרצים שלנו</a>
-                        <a @click="handlePage('חומרי עיון')">חומרי עיון</a>
+                                            
+                        <a
+                            v-for="item in items"
+                            :key="item.title"
+                            @click="handlePage(item.title)"
+                            >
+                            {{ item.title }}
+                        </a>
                         <a id="adminDiv" @click="handlePage('כניסת מנהל')">כניסת מנהל</a>
-                        
+
 
                     <div id="LinkedinCard" >
                         <a href="https://www.linkedin.com/in/lihi-israeli-4a674b358">
@@ -26,7 +31,7 @@
                 
         </div>
             <div id="shadow" v-show="isOpen" @click="closeMenu"></div>
-    </span>
+    </div>
 
 
 </div>
@@ -46,19 +51,17 @@ export default {
         { title: 'ההשתלמויות שלנו' },
         { title: 'המרצים שלנו' },        
         { title: 'חומרי עיון' },
-      ],
-        toggleMenu: this.isOpen
+      ]      
       }
   },
 
 methods: {
       closeMenu(){
-        this.$emit("close", false);
+        this.$emit("close");
     },
     handlePage(screen){
-        console.log(this.isMobile);
         this.$emit("change", screen);
-        this.$emit("close", false);
+        this.$emit("close");
     },
 
 }
@@ -68,20 +71,28 @@ methods: {
 <style>
 @font-face {
   font-family: 'galil';
-  src: url(../assets/fonts/web/FUP-Galil-Regular-V3.woff2) format('woff2'), url('../assets/fonts/web/FUP-Galil-Regular-V3.woff') format("woff");
+  src: url('../../assets/fonts/web/FUP-Galil-Regular-V3.woff2') format('woff2'), url('../../assets/fonts/web/FUP-Galil-Regular-V3.woff') format("woff");
 }
 .side{
+
   position: fixed;
   z-index: 3;
-    background-color: white;
-    height: 100vh;
-    width: 0;
-    top: 0;
-    left: 0;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    overscroll-behavior: contain;
-    transition: 0.2s ease-out;
+
+  top: 0;
+  left: 0;
+
+  width: 75vw;
+  height: 100vh;
+
+  background-color: white;
+
+  overflow-x: hidden;
+  overflow-y: hidden;
+  overscroll-behavior: contain;
+
+  transform: translateX(-100%);
+  transition: transform 0.2s ease-out;
+
 }
 
 .sideDark {
@@ -89,20 +100,20 @@ methods: {
 }
 
 .openNavClass{
-    width: 75vw;
-    height: 100%;
+    transform: translateX(0);
 }
 
 #shadow{
-  position: fixed;
-  z-index: 2;
-  width: 100vw;
-  height: 100vh;
-  background-color: #25222230;
-overflow-y: hidden;
-
-
+    position: fixed;
+    z-index: 2;
+    width: 100vw;
+    height: 100vh;
+    background-color: #25222230;
+    overflow-y: hidden;
+    top: 0;
+    left: 0;
 }
+
 .side #exit{
     left: 85%;
     top: 2vh;
@@ -127,7 +138,6 @@ overflow-y: hidden;
   padding: 8px 8px 8px 32px;
   text-decoration: none;
   font-size: 25px;
-  /* color: #858585; */
   display: block;
   transition: 0.5s;
   right: 5vw;

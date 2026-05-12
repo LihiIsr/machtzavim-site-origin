@@ -8,52 +8,54 @@
       'admin-page': isAdmin 
     }"
   >
-    <Header id="header" :is-mobile="mobile" @change-page="handleChangePage" @is-dark="changeMode" @open="openMenu"></Header>
-    <Main id="main" :is-mobile="mobile" :page-clicked="clickedPage" :is-dark="isDarkMode" :is-loaded="firstLoad"></Main>
-    <side-bar :is-mobile="mobile" :is-open="open" :is-dark="isDarkMode" @close="closeMenu" @change="handleChangePage"></side-bar>
-    <Footer id="footer"></Footer>
+    <header-section id="header-section" :is-mobile="isMobile" @change-page="handleChangePage" @toggle-dark="changeMode" @open="openMenu"></header-section>
+    <main-section id="main-section" :is-mobile="isMobile" :page-clicked="clickedPage" :is-dark="isDarkMode" :is-first-load="showLandingAnim"></main-section>
+    <side-bar :is-mobile="isMobile" :is-open="isSidebarOpen" :is-dark="isDarkMode" @close="closeMenu" @change="handleChangePage"></side-bar>
+    <footer-section id="footer-section"></footer-section>
   </div>
 </template>
 
 <script>
-import Header from './components/Header-Section.vue'
-import Main from './components/Main-Section.vue'
-import Footer from './components/Footer-Section.vue'
-import sideBar from './components/sideBar.vue'
+import HeaderSection from './components/HeaderSection.vue'
+import MainSection from './components/MainSection.vue'
+import FooterSection from './components/FooterSection.vue'
+import sideBar from './components/UI/sideBar.vue'
 
 export default {
   name: 'App',
   components: {
-    Header,
-    Footer,
-    Main,
-    sideBar
+    HeaderSection,
+    sideBar,
+    MainSection,
+    FooterSection
   },
   data() {
     return {
       clickedPage: "mainPage",
-      mobile: null,
       windowWidth: window.innerWidth,
-      windowHeight: window.innerHeight,
-      open: false,
+      isSidebarOpen: false,
       isHesh: false,
       isProf: false,
       isAdmin: false,
-      firstLoad: false,
+      showLandingAnim: true,
       isDarkMode: false
     }
   },
-  created() {
-    window.addEventListener('resize', this.checkScreen);
-    this.checkScreen();
+ mounted() {
+  window.addEventListener('resize', this.checkScreen);
+  this.checkScreen();
   },
   unmounted() {
     window.removeEventListener('resize', this.checkScreen);
   },
+  computed: {
+  isMobile() {
+    return this.windowWidth <= 450;
+  }
+  },
   methods: {
     checkScreen() {
       this.windowWidth = window.innerWidth;
-      this.mobile = this.windowWidth <= 450;
     },
     changeMode(mode) {
       this.isDarkMode = mode;
@@ -70,20 +72,21 @@ export default {
       if (page === "ההשתלמויות שלנו") {
         this.isHesh = true;
       } else if (page === "mainPage") {
-        this.firstLoad = true;
+        this.showLandingAnim = false;
       } else if (page === "המרצים שלנו") {
         this.isProf = true;
       } else if (page === "כניסת מנהל") {
         this.isAdmin = true;
       }
     },
-    openMenu(binary) {
+    openMenu() {
       document.body.classList.add("hideOverflow");
-      this.open = binary;
+      this.isSidebarOpen = true;
+
     },
-    closeMenu(binary) {
+    closeMenu() {
       document.body.classList.remove("hideOverflow");
-      this.open = binary;
+      this.isSidebarOpen = false;
     }
   }
 }
@@ -116,9 +119,9 @@ html, body {
 }
 
 /* Remove Absolute Positioning from Components */
-#header,
-#main,
-#footer {
+#header-section,
+#main-section,
+#footer-section {
   position: static; /* Overrides any previous absolute positioning */
   width: 100%;
 }

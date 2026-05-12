@@ -158,7 +158,6 @@ export default{
         },
 
         deleteHesh: async function(heshId){
-            console.log(heshId);
            await deleteDoc(doc(collection(db, "heshtalmuyot"), heshId));
         }
     },

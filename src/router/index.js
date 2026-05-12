@@ -1,6 +1,6 @@
   // src/router/index.js
   import { createRouter, createWebHistory } from 'vue-router';
-  import Admin from '../components/Admin-Section.vue'; // Assuming you have a Home component
+  import Admin from '../components/pages/adminPage'; // Assuming you have a Home component
 
   const routes = [
    
