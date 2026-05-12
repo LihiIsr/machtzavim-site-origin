@@ -114,19 +114,16 @@
     font-size: 1rem;
 }
 
-
 #bannerLogos {
-    border-radius: 80px;
     width: 18rem;
     align-self: center;
+    clip-path: circle(60%);
 }
 
 /* Desktop Overrides */
 @media only screen and (min-width: 1050px) {
     #contactCaption {
         font-size: 1.5vw !important;
-        /* align-self: flex-start;
-        margin-right: 42px; */
     }
 
     #bannerLogos{

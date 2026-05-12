@@ -30,9 +30,9 @@ export default {
     return {
       windowWidth: window.innerWidth,
       items: [
-        { src: require("@/assets/images/sliderSecond.jpg") },
-        { src: require("@/assets/images/slider22.png") },
-        { src: require("@/assets/images/slider333.png") },
+        { src: require("@/assets/images/homePageSlider/sliderFront.jpg") },
+        { src: require("@/assets/images/homePageSlider/sliderSecond.png") },
+        { src: require("@/assets/images/homePageSlider/sliderThird.png") },
       ],
     };
   },

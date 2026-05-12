@@ -37,13 +37,13 @@ export default {
         windowWidth: window.innerWidth,
         heshCards: [
           {
-            src: require('@/assets/images/ranagHesh.png'), caption: ' צה"לית רנ"ג', text: '"הנגדים הם עמוד השדרה של הצבא וצריך להשקיע בעבודה בדור הנוכחי והדור הבא"', subtitle: 'השתלמות מטכ"לית לדרג רב-נגד'
+            src: require('@/assets/images/heshSlider/ranagHesh.png'), caption: ' צה"לית רנ"ג', text: '"הנגדים הם עמוד השדרה של הצבא וצריך להשקיע בעבודה בדור הנוכחי והדור הבא"', subtitle: 'השתלמות מטכ"לית לדרג רב-נגד'
           },
           {
-            src: require('@/assets/images/saalHesh.png'), caption: ' צה"לית סא"ל', text: '"יחסי צבא חברה מורכבים ואינם שחור לבן, יש לנהל את המחלוקות בשיח ואפשר להגיע לתובנות מופלאות"', subtitle: 'השתלמות מטכ"לית לדרג סגן אלוף'
+            src: require('@/assets/images/heshSlider/saalHesh.png'), caption: ' צה"לית סא"ל', text: '"יחסי צבא חברה מורכבים ואינם שחור לבן, יש לנהל את המחלוקות בשיח ואפשר להגיע לתובנות מופלאות"', subtitle: 'השתלמות מטכ"לית לדרג סגן אלוף'
           },
           {
-            src: require('@/assets/images/sliderFirst4.jpeg'), caption: ' צה"לית אל"ם', text: '"צריך לחדד את הסיפור המשותף שלנו כמפקדים כדי לסמן מטרה ערכית בצורה ברורה יותר"', subtitle: 'השתלמות מטכ"לית לדרג אלוף משנה'
+            src: require('@/assets/images/heshSlider/alamHesh.jpeg'), caption: ' צה"לית אל"ם', text: '"צריך לחדד את הסיפור המשותף שלנו כמפקדים כדי לסמן מטרה ערכית בצורה ברורה יותר"', subtitle: 'השתלמות מטכ"לית לדרג אלוף משנה'
           },
 
         ]
@@ -59,9 +59,6 @@ export default {
           this.windowWidth = window.innerWidth;
         }
       },
-
-    
-
 }
 </script>
 
@@ -104,11 +101,9 @@ position: relative;
 @keyframes owd-reveal {
   0% {
     opacity: 0;
-    /* clip-path: inset(25%); */
   }
   100% {
     opacity: 1;
-    /* clip-path: inset(0%); */
   }
 }
 </style>

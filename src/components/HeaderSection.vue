@@ -2,7 +2,7 @@
     <div id="container">
         <div id="infoHeader">
             <div id="banner">
-                <img id="logo" src="@/assets/images/logoLight1.png" @click="handlePage('mainPage')">
+                <img id="logo" src="@/assets/images/logoLight.png" @click="handlePage('mainPage')">
                 
                 <div class="switch" :class="{moveSwitch: !isMobile}">
                   <label class="theme-switch" for="checkbox">
@@ -112,7 +112,7 @@
 }
 #menu{
   position: relative;
-     /* background-image: url(../assets/images/menu4.png); */
+     /* background-image: url(../assets/images/menu.png); */
      background-repeat: no-repeat;
     background-size: cover;
     filter: grayscale(10%);

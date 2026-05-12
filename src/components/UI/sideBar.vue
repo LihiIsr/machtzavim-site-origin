@@ -24,7 +24,7 @@
                             <p style="font-size: 3.5vw;">Check out the developer's account!</p>
                         </span>
                         <a href="https://www.linkedin.com/in/lihi-israeli-4a674b358">
-                            <img class="LinkIcon" :class="{darkenImg:isDark}" src="@/assets/images/boxThing.svg" />
+                            <img class="LinkIcon" :class="{darkenImg:isDark}" src="@/assets/images/linkIcon.svg" />
                         </a>
 
                     </div>

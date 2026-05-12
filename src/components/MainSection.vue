@@ -2,7 +2,7 @@
   <div>
      <div id="subPageContainer" v-if="pageClicked != 'mainPage'">
         <p class="caption"> {{pageClicked}} </p>
-        <img class="underline" id="underlineCaption" src="@/assets/images/blueUnderline3.png"/>
+        <img class="underline" id="underlineCaption" src="@/assets/images/blueUnderline.png"/>
     <ourHeshTalmoyut  v-if="pageClicked == 'ההשתלמויות שלנו'"></ourHeshTalmoyut>
 
     <prof-page :isMobile="isMobile" v-if="pageClicked == 'המרצים שלנו'"></prof-page>
