@@ -5,14 +5,16 @@
 
                     <img id="exit" :class="{darkenImg:isDark}" src="@/assets/images/x.svg" @click="closeMenu" />
                                             
-                        <a
+                        <router-link
                             v-for="item in items"
                             :key="item.title"
-                            @click="handlePage(item.title)"
+                            :to='"/" + item.name'
+                            @click="closeMenu"
                             >
                             {{ item.title }}
-                        </a>
-                        <a id="adminDiv" @click="handlePage('כניסת מנהל')">כניסת מנהל</a>
+                        </router-link>
+
+                        <router-link id="adminDiv" @click="closeMenu" to="/admin">כניסת מנהל</router-link>
 
 
                     <div id="LinkedinCard" >
@@ -38,19 +40,22 @@
 </template>
 
 <script>
+import { useAppState  } from '@/composables/useAppState'
+
+const {isDark, isMobile} = useAppState ()
 
 export default {
      props:{
         isOpen: Boolean ,
-        isDark: Boolean ,
-        isMobile: Boolean
     },
      data() {
       return {
-         items: [
-        { title: 'ההשתלמויות שלנו' },
-        { title: 'המרצים שלנו' },        
-        { title: 'חומרי עיון' },
+        isDark: isDark ,
+        isMobile: isMobile,
+        items: [
+        {name:'heshtalmuyot', title: 'ההשתלמויות שלנו' },
+        {name:'professors', title: 'המרצים שלנו' },        
+        {name:'articles', title: 'חומרי עיון' },
       ]      
       }
   },
@@ -59,11 +64,6 @@ methods: {
       closeMenu(){
         this.$emit("close");
     },
-    handlePage(screen){
-        this.$emit("change", screen);
-        this.$emit("close");
-    },
-
 }
 }
 </script>
@@ -141,6 +141,7 @@ methods: {
   display: block;
   transition: 0.5s;
   right: 5vw;
+   color: inherit;
 }
 .side #adminDiv{
     position: absolute;

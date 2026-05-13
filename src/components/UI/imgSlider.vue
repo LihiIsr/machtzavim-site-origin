@@ -1,7 +1,7 @@
 <template>
       <!-- Carousel / images -->
     <v-carousel
-      v-if="windowWidth <= 450"
+      v-if="isMobile"
       height="400"
       :show-arrows="false"
       cycle
@@ -25,10 +25,13 @@
 </template>
 
 <script>
+import { useAppState  } from '@/composables/useAppState'
+
+const {isMobile} = useAppState ();
 export default {
      data() {
     return {
-      windowWidth: window.innerWidth,
+      isMobile,
       items: [
         { src: require("@/assets/images/homePageSlider/sliderFront.jpg") },
         { src: require("@/assets/images/homePageSlider/sliderSecond.png") },
@@ -37,20 +40,6 @@ export default {
     };
   },
 
-  mounted() {
-    window.addEventListener("resize", this.updateWidth);
-  },
-
-  beforeUnmount() {
-    window.removeEventListener("resize", this.updateWidth);
-  },
-
-  methods: {
-    updateWidth() {
-      this.windowWidth = window.innerWidth;
-    },
-
-  },
 
 }
 </script>
@@ -61,21 +50,44 @@ export default {
   margin-top: 30px;
 }
 
-
 .flexImgContainer {
   display: flex;
+  margin-top: 12vh;
   justify-content: center;
   gap: 10px;
+  align-items: center;
 }
 
 .mainImg {
   width: 30vw;
-  height: 20vh;
+  height: 55vh;
 }
 
 .sideImg {
   width: 27vw;
   height: 42vh;
+}
+
+@media only screen and (min-width: 1050px) {
+
+    .mainImg {
+    width: 31vw;
+    height: 45vh;
+    }
+
+
+}
+
+@media only screen and (min-width: 1200px) {
+  .sideImg {
+    width: 28vw;
+    height: 56vh;
+  }
+  .mainImg {
+    width: 35vw;
+    height: 63vh;
+  }
+
 }
 
 </style>

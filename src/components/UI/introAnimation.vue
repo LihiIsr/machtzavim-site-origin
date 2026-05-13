@@ -31,11 +31,17 @@
 </template>
 
 <script>
+import { useIntroAnimation  } from '@/composables/useAppState'
+
+const {introPlayed } = useIntroAnimation ()
+
 export default {
-    props: {
-    isFirstLoad: Boolean,
+  data(){
+    return{
+      isFirstLoad: !introPlayed.value,
+    }
   },
-    computed: {
+  computed: {
     smallClass() {
       return this.isFirstLoad
         ? "smallLetter"
@@ -48,13 +54,15 @@ export default {
         : "smallLetter endSmallLetter smallLetterShow";
     },
   },
-    mounted() {
-    if (this.isFirstLoad) {
+  mounted(){
+  if (!introPlayed.value) {
     this.runAnimation();
-    // tell parent we already played it
-    this.$emit("intro-done");
+    introPlayed.value = true;
+    setTimeout(() => {
+         this.isFirstLoad=false;
+        }, 10000);
   }
-  },
+},
    methods: {
     runAnimation() {
       // wait for DOM to fully settle
@@ -97,6 +105,7 @@ export default {
             ?.classList.add("appearAnimation");
         }, 10000);
       });
+
     },
   },
 
@@ -215,4 +224,18 @@ export default {
 
 .endSmallLetter{margin-left: -6px;}
 
+@media only screen and (min-width: 1050px) {
+
+  #captionDivided{
+      gap: 18px !important;
+    }
+    .line-1{
+      font-size: 4vw !important;
+    }
+    .smallLetter{
+      font-size: 4vw !important;
+
+    }
+
+}
 </style>

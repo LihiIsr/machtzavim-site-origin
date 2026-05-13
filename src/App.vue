@@ -3,14 +3,11 @@
     id="app" 
     :class="{ 
       'dark-mode': isDarkMode,
-      'hesh-page': isHesh, 
-      'prof-page': isProf, 
-      'admin-page': isAdmin 
     }"
   >
-    <header-section id="header-section" :is-mobile="isMobile" @change-page="handleChangePage" @toggle-dark="changeMode" @open="openMenu"></header-section>
-    <main-section id="main-section" :is-mobile="isMobile" :page-clicked="clickedPage" :is-dark="isDarkMode" :is-first-load="showLandingAnim"></main-section>
-    <side-bar :is-mobile="isMobile" :is-open="isSidebarOpen" :is-dark="isDarkMode" @close="closeMenu" @change="handleChangePage"></side-bar>
+    <header-section id="header-section" @open="openMenu"></header-section>
+    <main-section id="main-section"></main-section>
+    <side-bar :is-open="isSidebarOpen" @close="closeMenu"></side-bar>
     <footer-section id="footer-section"></footer-section>
   </div>
 </template>
@@ -20,6 +17,11 @@ import HeaderSection from './components/HeaderSection.vue'
 import MainSection from './components/MainSection.vue'
 import FooterSection from './components/FooterSection.vue'
 import sideBar from './components/UI/sideBar.vue'
+
+import { useAppState  } from '@/composables/useAppState'
+
+const {isDark } = useAppState ();
+
 
 export default {
   name: 'App',
@@ -32,53 +34,12 @@ export default {
   data() {
     return {
       clickedPage: "mainPage",
-      windowWidth: window.innerWidth,
       isSidebarOpen: false,
-      isHesh: false,
-      isProf: false,
-      isAdmin: false,
-      showLandingAnim: true,
-      isDarkMode: false
+      isDarkMode: isDark
     }
   },
- mounted() {
-  window.addEventListener('resize', this.checkScreen);
-  this.checkScreen();
-  },
-  unmounted() {
-    window.removeEventListener('resize', this.checkScreen);
-  },
-  computed: {
-  isMobile() {
-    return this.windowWidth <= 450;
-  }
-  },
+
   methods: {
-    checkScreen() {
-      this.windowWidth = window.innerWidth;
-    },
-    changeMode(mode) {
-      this.isDarkMode = mode;
-    },
-    handleChangePage(page) {
-      this.clickedPage = page;
-      
-      // Reset flags for page-specific classes
-      this.isHesh = false;
-      this.isProf = false;
-      this.isAdmin = false;
-      
-      // Set the flag based on the current page
-      if (page === "ההשתלמויות שלנו") {
-        this.isHesh = true;
-      } else if (page === "mainPage") {
-        this.showLandingAnim = false;
-      } else if (page === "המרצים שלנו") {
-        this.isProf = true;
-      } else if (page === "כניסת מנהל") {
-        this.isAdmin = true;
-      }
-    },
     openMenu() {
       document.body.classList.add("hideOverflow");
       this.isSidebarOpen = true;
@@ -127,7 +88,8 @@ html, body {
 }
 
 /* Main content area takes up all available space */
-#main {
+#main-section {
+  margin-top: 5vh;
   flex-grow: 1; /* Key to sticky footer: allows main content to fill space */
 }
 
@@ -143,10 +105,5 @@ html, body {
   width: 100%;
 }
 
-/* Remove problematic, hardcoded height adjustments */
-.hesh-page,
-.prof-page,
-.admin-page {
-  /* These classes are now only for page-specific styles, not for height. */
-}
+
 </style>

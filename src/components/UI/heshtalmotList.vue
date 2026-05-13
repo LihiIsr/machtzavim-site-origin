@@ -41,9 +41,7 @@ export default{
             heshList : ref([])
         }
     },
-    methods:{
-        
-    },
+
     mounted() {
         const latestQuery = query(collection(db, 'heshtalmuyot'), orderBy('timestamp'));
         const liveList = onSnapshot(latestQuery, (snapshot) => {
@@ -70,6 +68,13 @@ export default{
   list-style: none;
   top: 2vh;
   font-size: 4vw;
+}
+
+@media only screen and (min-width: 1050px) {
+
+ #heshtalListMain{
+    font-size: 2vw;
+ }
 
 }
 </style>

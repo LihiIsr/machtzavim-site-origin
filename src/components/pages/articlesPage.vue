@@ -1,4 +1,6 @@
 <template>
+<div>
+<page-title>חומרי עיון</page-title>
    <div id="articlesContainer">
        <iframe type="text/html" src="https://www.mako.co.il/pzm-soldiers/your-picture/Article-1454ac28cf86731006.htm?partner=tagit" 
           :width="isMobile ? '300' : '500'" :height="isMobile ? '300' : '500'"></iframe>
@@ -10,12 +12,23 @@
             :width="isMobile ? '300' : '500'" :height="isMobile ? '300' : '500'"></iframe>
 
     </div>
+</div>
 </template>
 
 <script>
+import pageTitle from '../UI/pageTitle.vue'
+
+import { useAppState  } from '@/composables/useAppState'
+const {isMobile } = useAppState ()
+
 export default {
-    props: {
-    isMobile: Boolean
+  components:{
+    pageTitle
+  },
+  data(){
+    return{
+      isMobile
+    }
   }
 }
 </script>
@@ -39,4 +52,12 @@ export default {
     color: #d5dcff;
     border-radius: 25px;
 }
+
+
+@media only screen and (min-width: 1050px) {
+  #articlesContainer{
+    flex-direction: row;
+}
+}
+
 </style>

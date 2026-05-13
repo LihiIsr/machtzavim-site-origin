@@ -2,7 +2,9 @@
     <div id="container">
         <div id="infoHeader">
             <div id="banner">
-                <img id="logo" src="@/assets/images/logoLight.png" @click="handlePage('mainPage')">
+              <router-link to="/">
+                <img id="logo" src="@/assets/images/logoLight.png"/>
+              </router-link>
                 
                 <div class="switch" :class="{moveSwitch: !isMobile}">
                   <label class="theme-switch" for="checkbox">
@@ -16,14 +18,13 @@
                     <span class="hamburger-line"></span>
                     <span class="hamburger-line"></span>
                   </div>
-                <span v-if="!isMobile">
-                    <ul class="navBar" >
-                        <li class="link" :class="{darkLink:isDark}" @click="handlePage('ההשתלמויות שלנו')">ההשתלמויות שלנו</li>
-                        <li class="link" :class="{darkLink:isDark}" @click="handlePage('המרצים שלנו')">המרצים שלנו</li>
-                        <li class="link" :class="{darkLink:isDark}" @click="handlePage('חומרי עיון')">חומרי עיון</li>
-                        <li class="link" :class="{darkLink:isDark}" @click="handlePage('כניסת מנהל')">כניסת מנהל</li>
+                  
+                    <ul class="navBar" v-else>
+                        <router-link class="link" :class="{darkLink:isDark}" to="/heshtalmuyot">ההשתלמויות שלנו</router-link>
+                        <router-link class="link" :class="{darkLink:isDark}" to="/professors">המרצים שלנו</router-link>
+                        <router-link class="link" :class="{darkLink:isDark}" to="/articles">חומרי עיון</router-link>
+                        <router-link class="link" :class="{darkLink:isDark}" to="/admin">כניסת מנהל</router-link>
                     </ul>
-              </span>
 
             </div>
           </div>
@@ -31,32 +32,22 @@
 </template>
 
 <script>
+import { useAppState } from '@/composables/useAppState'
+
+const { isDark, isMobile } = useAppState()
 
   export default {
-    props:{
-      isMobile: Boolean,
-
-    },
     data: () => ({
       isDark: false,
+      isMobile:isMobile
     }),
     methods: {
       openMenu(){
         this.$emit("open");
       },
-      handlePage(i){
-        this.$emit("change-page", i);
-
-      },
       changeMode(){
-        if(this.isDark){
-           document.getElementById("app").classList.add("dark");
-            this.$emit("toggle-dark", true);
-        }
-        else{
-          document.getElementById("app").classList.remove("dark");
-            this.$emit("toggle-dark", false);
-        }
+
+      isDark.value = !isDark.value
       }
     }
   }
@@ -77,7 +68,7 @@
     background-size: 100% 100%;
 }
 #banner{
-    position: absolute;
+    position: relative;
     background-color: rgb(12 18 53);
     width: 100vw;
     height: 10vh;
@@ -223,6 +214,8 @@ input:checked + .slider:before {
     width: 10rem;
     text-align: center;
     cursor: pointer;
+  text-decoration: none;
+   color: inherit;
 
 }
 

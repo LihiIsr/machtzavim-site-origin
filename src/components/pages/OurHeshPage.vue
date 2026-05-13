@@ -1,8 +1,11 @@
 <template>
+<div>
+<page-title>ההשתלמויות שלנו</page-title>
+
   <div>
-       <div :class="[ windowWidth <= 450 ? 'ourHeshtalmuyotFlexMobile' : 'ourHeshtalmuyotFlexTablet' ]">
+       <div :class="[ isMobile ? 'ourHeshtalmuyotFlexMobile' : 'ourHeshtalmuyotFlexTablet' ]">
           <v-card
-            :class="[ windowWidth <= 450 ? 'mx-auto my-8 owd-reveal' : 'mx-auto my-8' ]"
+            :class="[ isMobile ? 'mx-auto my-8 owd-reveal' : 'mx-auto my-8' ]"
             elevation="16"
             max-width="344"
             color="indigo-lighten-5"
@@ -28,13 +31,21 @@
           </v-card>
       </div>
   </div>
+ </div>
 </template>
 
 <script>
+import { useAppState  } from '@/composables/useAppState'
+const {isMobile } = useAppState ();
+import pageTitle from '../UI/pageTitle.vue'
+
 export default {
+    components:{
+    pageTitle
+  },
     data(){
         return{
-        windowWidth: window.innerWidth,
+        isMobile,
         heshCards: [
           {
             src: require('@/assets/images/heshSlider/ranagHesh.png'), caption: ' צה"לית רנ"ג', text: '"הנגדים הם עמוד השדרה של הצבא וצריך להשקיע בעבודה בדור הנוכחי והדור הבא"', subtitle: 'השתלמות מטכ"לית לדרג רב-נגד'
@@ -48,17 +59,6 @@ export default {
 
         ]
         }},
-      mounted(){
-        window.addEventListener('resize', this.updateWidth);
-      },
-      beforeUnmount() {
-        window.removeEventListener('resize', this.updateWidth);
-      },
-      methods: {
-        updateWidth() {
-          this.windowWidth = window.innerWidth;
-        }
-      },
 }
 </script>
 

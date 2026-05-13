@@ -1,51 +1,56 @@
 <template>
-<div class="ProfCardsContainer">
-  <div class="profFlex">
-    <div
-        v-for="(image, i) in profCardsCurr"
-        :key="i"
-        class="flip-card-inner"
-        color="indigo-lighten-5"
-        v-bind:id="profCardsCurr[i].id"   
-      
-        >
-           
-        <div class="flip-card-front owd-reveal">
-            <img class="avatarImg" :src="profCardsCurr[i].src" />
-            <p class="profName"> פרופ' {{profCardsCurr[i].name}} </p>
-            <p class="profSubtitle">הסבר קצר על תחום עיסוקו</p>
-        <p class="profText" v-if="!isMobile">הסבר ארוך יותר על המרצה. למשל: בעל תואר במדעי החברה ופעיל לטובת ארגון מסויים</p>          
-        <button class="readMore" @click="toggleFlip(profCardsCurr[i].id)" v-if="isMobile && profCardsCurr[i].moreInfo">קרא עוד >></button>
-        </div>
+<div>
+<page-title>המרצים שלנו</page-title>
 
-        <div class="flip-card-back">
-          <p class="profText" v-if="isMobile">הסבר ארוך יותר על המרצה. למשל: בעל תואר במדעי החברה ופעיל לטובת ארגון מסויים</p>
-          
-            <button class="readLess" @click="toggleFlip(profCardsCurr[i].id)" v-if="profCardsCurr[i].moreInfo"> >> חזור</button>
-        </div>
+  <div class="ProfCardsContainer">
+    <div class="profFlex">
+      <div
+          v-for="(image, i) in profCardsCurr"
+          :key="i"
+          class="flip-card-inner"
+          color="indigo-lighten-5"
+          v-bind:id="profCardsCurr[i].id"   
+        
+          >
+            
+          <div class="flip-card-front owd-reveal">
+              <img class="avatarImg" :src="profCardsCurr[i].src" />
+              <p class="profName"> פרופ' {{profCardsCurr[i].name}} </p>
+              <p class="profSubtitle">הסבר קצר על תחום עיסוקו</p>
+          <p class="profText" v-if="!isMobile">הסבר ארוך יותר על המרצה. למשל: בעל תואר במדעי החברה ופעיל לטובת ארגון מסויים</p>          
+          <button class="readMore" @click="toggleFlip(profCardsCurr[i].id)" v-if="isMobile && profCardsCurr[i].moreInfo">קרא עוד >></button>
+          </div>
+
+          <div class="flip-card-back">
+            <p class="profText" v-if="isMobile">הסבר ארוך יותר על המרצה. למשל: בעל תואר במדעי החברה ופעיל לטובת ארגון מסויים</p>
+            
+              <button class="readLess" @click="toggleFlip(profCardsCurr[i].id)" v-if="profCardsCurr[i].moreInfo"> >> חזור</button>
+          </div>
+      </div>
     </div>
+
+
+          <div id="flexPagination">
+              <span class="paginationCircle" @click="changeProfPage(0)" :class="{clickedProf: firstProf}"><p class="paginationText">1</p></span>
+              <span class="paginationCircle" @click="changeProfPage(1)" :class="{clickedProf: !firstProf}"><p class="paginationText">2</p></span>
+          </div>
   </div>
-
-
-        <div id="flexPagination">
-            <span class="paginationCircle" @click="changeProfPage(0)" :class="{clickedProf: firstProf}"><p class="paginationText">1</p></span>
-            <span class="paginationCircle" @click="changeProfPage(1)" :class="{clickedProf: !firstProf}"><p class="paginationText">2</p></span>
-        </div>
 </div>
 </template>
 
 <script>
-
-
+import pageTitle from '../UI/pageTitle.vue'
+import { useAppState  } from '@/composables/useAppState'
+const {isMobile } = useAppState ()
 
 export default {
-   props:{
-          isMobile: Boolean,
-
-    },
+  components:{
+    pageTitle
+  },
     data() {
       
         return{
+          isMobile,
            firstProf:true,
            profCardsCurr:[],
 

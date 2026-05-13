@@ -1,9 +1,9 @@
 <template>
-  <div id="flexMainContainer">
+  <div class="flexMainContainer">
 
     <!-- intro -->
     <div>
-      <intro-animation :is-first-load="isFirstLoad" @intro-done="handleIntroDone"></intro-animation>
+      <intro-animation @intro-done="handleIntroDone"></intro-animation>
 
       <p id="ourVisionText">
         יחידת מחצבי”ם הינה בית מדרש לפיקוד הבכיר בצה”ל.
@@ -49,10 +49,6 @@ export default {
     introAnimation
   },
 
-  props: {
-    isFirstLoad: Boolean,
-    isDark: Boolean,
-  },
   methods:{
     handleIntroDone(){
         this.$emit("intro-done");
@@ -64,14 +60,14 @@ export default {
 
 <style>
 
-#flexMainContainer {
+.flexMainContainer {
   position: relative;
-  margin-top: 18vh;
-  width: 100vw;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
   margin-bottom: 30px;
+
 }
 
 
@@ -100,6 +96,25 @@ export default {
   top: 3vh;
   padding: 7px;
   direction: rtl;
+}
+
+@media only screen and (min-width: 1050px) {
+
+    #ourVisionText{
+      font-size: 2vw !important;
+      margin-left: 64px;
+      margin-right: 64px;
+    }
+
+    .heshListCaption{
+      font-size: 3vw !important;
+    }
+
+    #flexMainContainer{
+      gap: 70px !important;
+    }
+
+
 }
 
 </style>

@@ -1,4 +1,7 @@
 <template>
+<div>
+<page-title>כניסת מנהל</page-title>
+
   <div id="adminSection">
     <div class="adminInput" v-if="!isTrue">
       <label> סיסמא: </label>
@@ -65,6 +68,7 @@
     </div>
 
   </div>
+</div>
 </template>
 
 
@@ -74,7 +78,9 @@ orderBy, onSnapshot,query, updateDoc, serverTimestamp, limit, getDocs } from "fi
 import { ref, onUnmounted } from 'vue';
 import { initializeApp } from "firebase/app";
 
-
+import pageTitle from '../UI/pageTitle.vue'
+import { useAppState  } from '@/composables/useAppState'
+const {isDark} = useAppState ()
 
 
 const firebaseConfig = {
@@ -111,16 +117,18 @@ getDocs(q)
 
 
 export default{
+    components:{
+    pageTitle
+  },
     data() {
         return{
             heshList : ref([]),
             isTrue: false,
-            isIncorrect: false
-        }
+            isIncorrect: false,
+            isDarkMode:isDark
+        } 
     },
-    props:{
-        isDarkMode:Boolean
-    },
+
     methods:{
         passwordVisibility: function(){
              var x = document.getElementById("myInput");
