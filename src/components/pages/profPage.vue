@@ -31,8 +31,8 @@
 
 
           <div id="flexPagination">
-              <span class="paginationCircle" @click="changeProfPage(0)" :class="{clickedProf: firstProf}"><p class="paginationText">1</p></span>
-              <span class="paginationCircle" @click="changeProfPage(1)" :class="{clickedProf: !firstProf}"><p class="paginationText">2</p></span>
+              <span class="paginationCircle" @click="changeProfPage(0)" :class="{clickedProf: currentPage==0}"><p class="paginationText">1</p></span>
+              <span class="paginationCircle" @click="changeProfPage(1)" :class="{clickedProf: currentPage==1}"><p class="paginationText">2</p></span>
           </div>
   </div>
 </div>
@@ -43,6 +43,8 @@ import pageTitle from '../UI/pageTitle.vue'
 import { useAppState  } from '@/composables/useAppState'
 const {isMobile } = useAppState ()
 
+import { professorPages } from '@/data/professors'
+
 export default {
   components:{
     pageTitle
@@ -50,171 +52,21 @@ export default {
     data() {
       
         return{
+          currentPage:0,
           isMobile,
-           firstProf:true,
-           profCardsCurr:[],
-
-            profCards1: [
-          
-            {
-              src: require('@/assets/images/blankImg.png'), name:'שמואל', info:'', moreInfo: ''
-            }
-          ,
-        
-            {
-              id: 6 , src: require('@/assets/images/blankImg.png'), name:'סבטלנה', info:'', moreInfo: 'blah blah blah'
-            }
-          ,
-          
-            {
-              src: require('@/assets/images/blankImg.png'), name:'יוסי', info:'', moreInfo: ''
-            }
-          ,
-          
-            {
-              src: require('@/assets/images/blankImg.png'), name:'נחמה', info:'', moreInfo: ''
-            }
-          ,
-          
-            {
-               id: 9, src: require('@/assets/images/blankImg.png'), name:'רבקה', info:'', moreInfo: 'blaaaaaa'
-            }
-
-          ,
-          
-            {
-               id: 10,src: require('@/assets/images/blankImg.png'), name:'גלית',  info:'', moreInfo: ' i hate shira'
-            }
-          ,
-          
-            {
-               id: 11, src: require('@/assets/images/blankImg.png'), name:'יהודה',  info:'', moreInfo: 'kaki ktzina'
-            }
-          ,
-            {
-              src: require('@/assets/images/blankImg.png'), name:'מיכה', info:'', moreInfo: ''
-            }
-          ,
-            {
-              src: require('@/assets/images/blankImg.png'), name:'רונית', info:'', moreInfo: ''
-            }
-          ,
-            {
-              src: require('@/assets/images/blankImg.png'), name:'שרית', info:'', moreInfo: ''
-            }
-          ,
-            {
-              src: require('@/assets/images/blankImg.png'), name:'יהודית', info:'', moreInfo: ''
-            }
-          ,
-            {
-              src: require('@/assets/images/blankImg.png'), name:'מיכאל', info:'', moreInfo: ''
-            }
-          ,
-            {
-              id: 12, src: require('@/assets/images/blankImg.png'), name:'אלון', info:'', moreInfo: 'fuck you'
-            }
-          ,
-            {
-              src: require('@/assets/images/blankImg.png'), name:'נעמי', info:'', moreInfo: ''
-            }
-          ,
-            {
-              src: require('@/assets/images/blankImg.png'), name:'שרה', info:'', moreInfo: ''
-            }
-
-        ],
-
-        profCards2: [
-          
-            {
-              id:1, src: require('@/assets/images/blankImg.png'), name:'שרה', info:'', moreInfo: 'blahhh'
-            }
-          ,
-        
-            {
-              src: require('@/assets/images/blankImg.png'), name:'שמוליק', info:'', moreInfo: ''
-            }
-          ,
-          
-            {
-              id:2,src: require('@/assets/images/blankImg.png'), name:'יוסי', info:'', moreInfo: 'ad mataiiiii'
-            }
-          ,
-          
-            {
-              src: require('@/assets/images/blankImg.png'), name:'מוראל' ,info:'', moreInfo: ''
-            }
-          ,
-          
-            {
-              src: require('@/assets/images/blankImg.png'), name:'שושנה', info:'', moreInfo: ''
-            }
-
-          ,
-          
-            {
-              src: require('@/assets/images/blankImg.png'), name:'גלית', info:'', moreInfo: ''
-            }
-          ,
-          
-            {
-              src: require('@/assets/images/blankImg.png'), name:'יהודה', info:'', moreInfo: ''
-            }
-          ,
-            {
-              src: require('@/assets/images/blankImg.png'), name:'מיכה', info:'', moreInfo: ''
-            }
-          ,
-            {
-              src: require('@/assets/images/blankImg.png'), name:'רונית', info:'', moreInfo: ''
-            }
-          ,
-            {
-              src: require('@/assets/images/blankImg.png'), name:'שרית', info:'', moreInfo: ''
-            }
-          ,
-            {
-              src: require('@/assets/images/blankImg.png'), name:'יהודית', info:'', moreInfo: ''
-            }
-          ,
-            {
-              src: require('@/assets/images/blankImg.png'), name:'מיכאל', info:'', moreInfo: ''
-            }
-          ,
-            {
-              src: require('@/assets/images/blankImg.png'), name:'אלון', info:'', moreInfo: ''
-            }
-          ,
-            {
-              id:3,src: require('@/assets/images/blankImg.png'), name:'נעמי', info:'', moreInfo: 'go fucking fuck urself'
-            }
-          
-        ],
-
-
+          professorPages,
         }
     },
-    mounted() {
-      this.profCardsCurr = JSON.parse(JSON.stringify(this.profCards1))
+    computed: {
+  profCardsCurr() {
+    return this.professorPages[this.currentPage]
+  }
+},
 
-    },
     methods:{
         changeProfPage(page){
-
-           this.firstProf=!this.firstProf;
-           this.profCardsCurr = [];
-
-            switch (page) {
-              case 0:
-                this.profCardsCurr = JSON.parse(JSON.stringify(this.profCards1))
-                break;
-              case 1:
-                this.profCardsCurr = JSON.parse(JSON.stringify(this.profCards2))
-                break;
-             
-            }
-            window.scrollTo({top:0, behavior: 'smooth'});
+          this.currentPage = page;
+          window.scrollTo({top:0, behavior: 'smooth'});
 
         },
         toggleFlip(id){
